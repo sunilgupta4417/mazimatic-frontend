@@ -1,0 +1,6 @@
+@media(max-width:650px){
+    .navbar-light .navbar-toggler-icon {
+        filter: opacity(1) drop-shadow(0 0 0 white);
+        background-image: url("../images/menu.svg");
+    }
+}

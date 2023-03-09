@@ -1,0 +1,992 @@
+﻿#toolBox {
+    padding-bottom:50px;
+    background: url('imgs/mazimatic_bg.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+@media screen and (max-width:767px) {
+    #toolBox {
+        background: url('imgs/mazimatic_bg.jpg');
+        background-repeat: no-repeat;
+        background-size: inherit;
+    }
+}
+body {
+    background: #0e151f !important;
+}
+.big_text {
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 700;
+    /*margin-top: -24px;*/
+    font-size: 100px;
+    line-height: 93%;
+    background: linear-gradient(90.06deg, #A273FF -2.12%, #CD9AEF 46.21%, #8142FE 91.99%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-left:25px;
+}
+
+.btn_box u
+{
+    list-style-type:none;
+}
+.btn_box a {
+    font-family: 'Alumni Sans', sans-serif;
+}
+.btn_box u li {
+    padding-top:15px;
+}
+.btn_link {
+    letter-spacing: 1px;
+    margin-top: 40px;
+    padding-top: 11px;
+    width: 230px;
+    height: 43px;
+    background: linear-gradient(225deg, rgb(71, 24, 255) 14.89%, rgb(147, 63, 254) 85.85%);
+    border-radius: 10px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 100%;
+    text-align: center;
+    color: rgb(255, 255, 255);
+}
+.btn_link:hover {
+    text-decoration:none;
+}
+
+/*cards*/
+.cards {
+    background-color: transparent !important;
+    /* border: 1px solid #fff !important; */
+    border-radius: 35px;
+    background-image: url(tool_imgs/card.jpeg);
+    background-repeat: no-repeat;
+    min-height: 600px;
+    background-size: 100% 100%;
+    box-shadow: 2px 2px 7px #efefef;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Alumni Sans';
+}
+
+
+
+.start-description img {
+    width: 100%;
+    height: 420px;
+}
+
+.start-description {
+    position: absolute;
+    left: 350px;
+    top: 31%;
+}
+
+.text-img img {
+    width: 100%;
+    max-width: 75%;
+}
+
+.text-img {
+    position: absolute;
+    top: 20%;
+    left: 45px;
+}
+
+.bg-img img {
+    width: 100%;
+    min-height: 843px;
+}
+
+section.top-banner {
+    width: 100%;
+    position: relative;
+    top: -130px;
+}
+
+.bg-button ul {
+    list-style: none;
+}
+
+.bg-button button {
+    width: 230px;
+    height: 35px;
+    background: linear-gradient(225deg, rgb(71, 24, 255) 14.89%, rgb(147, 63, 254) 85.85%);
+    border-radius: 10px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 100%;
+    text-align: center;
+    color: rgb(255, 255, 255);
+}
+
+.bg-button {
+    position: absolute;
+    top: 50%;
+    left: 9px;
+}
+
+    .bg-button li {
+        padding: 10px 0;
+    }
+
+.one:hover {
+    background: linear-gradient(225deg, #4718FF 14.89%, #933FFE 85.85%) !important;
+    color: #fff;
+}
+
+.btn-check:checked + .btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check) + .btn:active {
+    color: #fff !important;
+    background-color: #4718FF !important;
+    border-color: #4718FF !important;
+}
+
+.bg-icons {
+    position: absolute;
+    bottom: 40px;
+    left: 80px;
+}
+
+    .bg-icons i {
+        font-size: 25px;
+        padding: 10px;
+        color: #CFB1FF;
+    }
+
+
+.card-title h3 {
+    color: rgb(255, 255, 255);
+    font-size: 35px;
+    padding: 5px 0 0 0;
+    line-height: 93%;
+    font-style: italic;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+}
+
+h1.price-rate {
+    color: rgba(67, 234, 128, 1);
+    font-size: 60px;
+    margin-top: -20px;
+    text-align: center;
+    font-weight: 700;
+    font-style: italic;
+    font-family: 'Alumni Sans';
+}
+
+.progress {
+    width: 100%;
+    margin: -10px auto 10px;
+    position: relative;
+    color: rgb(60, 48, 86);
+    border: 0.3px solid rgba(255, 255, 255, 0.28);
+    height: 34px !important;
+    background-color: rgb(60, 48, 86) !important;
+    border-radius: 829.97px !important;
+}
+
+    .progress p {
+        padding-top: 16px;
+        position: absolute;
+        font-size: 22px;
+        font-weight: 600;
+        color: #fff;
+        text-align: center;
+        text-transform: uppercase;
+        left: 30%;
+        font-style: italic;
+    }
+
+p.title1 {
+    background: linear-gradient(267.1deg, #D99CFF -5.79%, #9069FF 108.2%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 19px;
+}
+
+p.title2 {
+    font-style: italic;
+    font-weight: 600;
+    font-size: 19px;
+    color: #62C7FF;
+}
+
+p.title3 {
+    font-style: italic;
+    font-weight: 600;
+    font-size: 19px;
+    color: #FF1E47;
+}
+
+.progress-bar {
+    background-color: #5def93 !important;
+}
+
+h1.card-sign-up {
+    text-align: center;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 60px;
+    color: #5DC5FF;
+}
+
+h2.card-middle-text {
+    font-family: "Alumni Sans";
+    font-style: italic;
+    font-weight: 600;
+    font-size: 50px;
+    margin-top: -15px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+}
+
+.email-enter input {
+    width: 90%;
+    margin: 0px auto;
+    padding: 5px 20px;
+    font-weight: 600;
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.3) !important;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.23);
+    border-radius: 10px;
+}
+
+.card-middle-title {
+    margin-top: -20px;
+}
+
+.email-enter input::placeholder {
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 34px;
+    padding-left: 15px;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.form-control:focus {
+    color: #212529;
+    background-color: transparent !important;
+    border-color: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.submit-button {
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+    .submit-button button {
+        background: linear-gradient(114.01deg, #4F73F0 -2.51%, rgba(255, 255, 255, 0.17) 151.05%);
+        /* opacity: 0.5; */
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 5px 6px 20px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(27px);
+        border-radius: 10px;
+        width: 211px;
+        height: 50px;
+    }
+
+        .submit-button button span {
+            font-family: 'Alumni Sans';
+            font-style: italic;
+            font-weight: 600;
+            font-size: 35px;
+            line-height: 40px;
+            color: #FFFFFF;
+        }
+
+.email-enter {
+    padding-bottom: 12px;
+    margin-top: -25px;
+}
+
+.two:hover {
+    color: #fff !important;
+    background: linear-gradient(114.01deg, #4F73F0 -2.51%, rgba(255, 255, 255, 0.17) 151.05%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+}
+
+
+.content-cards img {
+    height: 40px;
+    padding-top: 5px;
+}
+
+
+.hr-lines:before {
+    content: " ";
+    display: block;
+    height: 1px;
+    width: 100px;
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.hr-lines:after {
+    content: " ";
+    height: 1px;
+    width: 100px;
+    background: rgba(255, 255, 255, 0.5);
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+}
+
+.hr-lines {
+    position: relative;
+    text-align: center;
+}
+
+
+.card-bottom-text p {
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 25px;
+    color: #FFFFFF;
+}
+
+.content-cards {
+    margin-top: -5px;
+    padding-bottom: 15px;
+}
+
+.coin-img {
+    background-image: url(tool_imgs/Coin_Payments_1.svg);
+    background-repeat: no-repeat;
+    width: 99px;
+    height: 50px;
+}
+
+.payme-img {
+    background-image: url(tool_imgs/Epay1.svg);
+    background-repeat: no-repeat;
+    width: 99px;
+    height: 50px;
+}
+
+.upi-img {
+    background-image: url(tool_imgs/upi.svg);
+    background-repeat: no-repeat;
+    width: 99px;
+    height: 50px;
+}
+
+
+nav.navbar.navbar-expand-lg {
+    padding: 35px;
+}
+
+.collapse {
+    justify-content: end;
+}
+
+li.nav-item {
+    padding: 0 35px;
+}
+
+a.nav-link {
+    color: #fff;
+    font-size: 24px;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-family: 'Alumni Sans';
+    font-style: italic;
+}
+
+.nav-link:focus,
+.nav-link:hover {
+    color: #fff !important;
+}
+
+
+h1.big-text {
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 700;
+    margin-top: -24px;
+    font-size: 100px;
+    line-height: 93%;
+    background: linear-gradient(90.06deg, #A273FF -2.12%, #CD9AEF 46.21%, #8142FE 91.99%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+
+h1.card2-title {
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 93%;
+    background: linear-gradient(90.53deg, #43EA80 0.53%, #38F8D4 104.35%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+.card-middle-title-box {
+    width: 333px;
+    height: 245px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.23);
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+    .card-middle-title-box img {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        left: 125px;
+        top: 12px;
+    }
+
+    .card-middle-title-box p {
+        font-family: 'Alumni Sans';
+        font-style: italic;
+        font-weight: 600;
+        font-size: 40px;
+        line-height: 52px;
+        text-align: center;
+        color: #9FEEFF;
+        position: relative;
+        top: 85px;
+    }
+
+p.bottom-para {
+    text-align: center;
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 600;
+    padding: 5px 0;
+    font-size: 18px;
+    line-height: 25px;
+    color: #FFFFFF;
+}
+
+.input-group {
+    height: 40px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.23);
+    border-radius: 10px;
+}
+
+    .input-group button {
+        width: 115px;
+        height: 40px;
+        background: linear-gradient(114.01deg, #4F73F0 -2.51%, rgba(255, 255, 255, 0.17) 151.05%);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 5px 6px 20px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(27px);
+        border-radius: 10px 0px 0px 10px;
+        font-family: 'Alumni Sans';
+        font-style: italic;
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 26px;
+        text-transform: uppercase;
+        color: #FFFFFF;
+    }
+
+    .input-group input {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.23);
+        border-radius: 10px;
+    }
+
+        .input-group input::placeholder {
+            font-family: 'Alumni Sans';
+            font-style: italic;
+            font-weight: 600;
+            font-size: 26px;
+            line-height: 31px;
+            color: #3BFFC4;
+            text-align: center;
+        }
+
+.dash_input {
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 600;
+    font-size: 26px;
+    height: 40px;
+    color: #3BFFC4;
+    text-align: center;
+}
+
+    .dash_input:focus {
+        color: #3BFFC4 !important;
+        background-color: transparent !important;
+        border-color: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+.btns.check {
+    width: 160px;
+    height: 42.63px;
+    background: linear-gradient(114.01deg, #A04FF0 -2.51%, rgba(255, 255, 255, 0.17) 151.05%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.64), 5px 6px 20px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(27px);
+    border-radius: 10px;
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 25px;
+    color: #FFFFFF;
+}
+
+.check-btn {
+    width: 160px;
+    height: 42.63px;
+    background: linear-gradient(114.01deg, #F0C34F -2.51%, rgba(255, 255, 255, 0.17) 151.05%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.64), 5px 6px 20px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(27px);
+    border-radius: 10px;
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 25px;
+    color: #FFFFFF;
+}
+
+.checkbox {
+    position: relative;
+}
+
+p.payment-title {
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 600;
+    font-size: 25px;
+    text-align: center;
+    line-height: 30px;
+    color: #FFFFFF;
+}
+
+.checkbox img {
+    margin-left: -15px;
+}
+
+.btns.check input {
+    position: relative;
+    left: 10px;
+    border-radius: 50%;
+    width: 21px;
+    height: 21px;
+    border: none;
+    top: 5px;
+    background-color: #5def93;
+    outline: none !important;
+    box-shadow: none !important;
+    color: #fff;
+}
+
+.check-btn input {
+    position: relative;
+    left: 10px;
+    border-radius: 50% !important;
+    width: 21px;
+    height: 21px;
+    border: none;
+    top: 5px;
+    background-color: #5def93 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: #fff;
+}
+
+p.payment-titles {
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 600;
+    font-size: 25px;
+    text-align: center;
+    line-height: 30px;
+    color: #FFFFFF;
+    padding-top: 15px;
+    padding-bottom: 5px;
+}
+
+.coin-imgs button:hover {
+}
+
+.coin-imgs button {
+    background-color: transparent;
+    border: none;
+    padding: 0 5px;
+}
+
+    .coin-imgs button img {
+        width: 100%;
+    }
+
+button.visa-button img {
+    width: 130px;
+}
+
+.buy-button button {
+    width: 131px;
+    height: 38px;
+    background: linear-gradient(111.56deg, #11FF70 -2.6%, rgba(255, 255, 255, 0.17) 106.34%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 5px 6px 20px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(27px);
+    border-radius: 10px;
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 34px;
+    color: #FFFFFF;
+}
+
+.buy-button {
+    position: absolute;
+    left: 120px;
+    padding-top: 12px;
+}
+
+h1.succes-title {
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 700;
+    font-size: 76px;
+    line-height: 93%;
+    text-align: center;
+    background: linear-gradient(90.53deg, #43EA80 0.53%, #38F8D4 104.35%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-top: 30px;
+}
+
+
+.sucess-img img {
+    width: 80%;
+}
+
+.sucess-img {
+    position: relative;
+    left: 90px;
+    top: -30px;
+    width: 230px;
+}
+
+.success-img {
+    margin-top: -25px;
+}
+
+.success-button button {
+    width: 283px;
+    height: 50px;
+    left: 989px;
+    top: 590px;
+    background: linear-gradient(114.01deg, #4F73F0 -2.51%, rgba(255, 255, 255, 0.17) 151.05%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 5px 6px 20px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(27px);
+    border-radius: 10px;
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 42px;
+    color: #FFFFFF;
+}
+
+.success-button {
+    text-align: center;
+    margin-top: -30px;
+    padding-bottom: 15px;
+}
+
+.success-payment {
+    padding-bottom: 25px;
+}
+
+h1.failed-title {
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 700;
+    font-size: 65px;
+    line-height: 93%;
+    padding-top: 30px;
+    text-align: center;
+    background: linear-gradient(90.53deg, #FF005C 0.53%, #F43B73 104.35%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+
+.failed-img img {
+    width: 60%;
+}
+
+.failed-img {
+    position: relative;
+    left: 125px;
+    top: 7px;
+    width: 200px;
+    padding-top: 10px;
+    padding-bottom: 25px;
+}
+
+.failed-button button {
+    width: 133px;
+    height: 50px;
+    background: linear-gradient(114.01deg, #4F73F0 -2.51%, rgba(255, 255, 255, 0.17) 151.05%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 5px 6px 20px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(27px);
+    border-radius: 10px;
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 42px;
+    color: #FFFFFF;
+}
+
+.failed-button {
+    text-align: center;
+}
+
+.failed-button {
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 40px;
+}
+
+.forget p {
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 88%;
+    text-align: end;
+    margin-right: 25px;
+    color: #FFFFFF;
+}
+
+
+h2.card-middles-texts {
+    font-family: "Alumni Sans";
+    font-style: italic;
+    font-weight: 600;
+    font-size: 41px;
+    margin-top: -15px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+}
+
+.payment_mth_1 {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.23);
+    border-radius: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    min-height: 55px;
+}
+
+input {
+    accent-color: green;
+}
+
+.radio_btn_hldr input[type="radio"] {
+    margin-top: 5px;
+    -ms-transform: scale(2.2); 
+    -webkit-transform: scale(2.2); 
+    transform: scale(2.2);
+}
+
+#coinpayments_div, #epay_div, #upi_div {
+    cursor: pointer;
+}
+
+.buy_button {
+    width: 131px;
+    height: 38px;
+    background: linear-gradient(111.56deg, #11FF70 -2.6%, rgba(255, 255, 255, 0.17) 106.34%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 5px 6px 20px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(27px);
+    border-radius: 10px;
+    font-family: 'Alumni Sans';
+    font-style: italic;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 34px;
+    color: #FFFFFF;
+}
+/*load bar*/
+.load-bar {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 10px;
+    background-color: #fdba2c;
+}
+
+.load-bar2 {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 7px;
+    background-color: #fdba2c;
+}
+
+.bar {
+    content: "";
+    display: inline;
+    position: absolute;
+    width: 0;
+    height: 100%;
+    left: 50%;
+    text-align: center;
+    border: 1px solid white;
+}
+
+    .bar:nth-child(1) {
+        background-color: #da4733;
+        animation: loading 3s linear infinite;
+    }
+
+    .bar:nth-child(2) {
+        background-color: #3b78e7;
+        animation: loading 3s linear 1s infinite;
+    }
+
+    .bar:nth-child(3) {
+        background-color: #fdba2c;
+        animation: loading 3s linear 2s infinite;
+    }
+
+@keyframes loading {
+    from {
+        left: 50%;
+        width: 0;
+        z-index: 100;
+    }
+
+    33.3333% {
+        left: 0;
+        width: 100%;
+        z-index: 10;
+    }
+
+    to {
+        left: 0;
+        width: 100%;
+    }
+}
+
+#loadingDiv2 {
+    position: fixed;
+    z-index: 10000;
+    right: 0px;
+    top: 0px;
+    width: 100%;
+}
+
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+
+video.myVideo {
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.progress_pd {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: transparent !important;
+    opacity: 1;
+}
+
+.pl_10{
+    padding-left:10px;
+}
+
+pt_7{
+    padding-top:7px;
+}
+pt_10{
+    padding-top:10px;
+}
+
+.start_left{
+    padding-left:20%;
+}
+@media screen and (max-width:767px) {
+    .start_left {
+        padding-left:0px;
+        text-align:center;
+        padding-bottom:25px;
+    }
+}
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+    width: 97% !important;
+}
+
+#__next {
+    margin-top: 50px;
+}
+
