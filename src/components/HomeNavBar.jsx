@@ -1,9 +1,11 @@
 import { React, Component } from "react";
 import { Link } from "react-router-dom";
-import { UserConsumer } from "../UserContext";
+import { UserConsumer, UserContext } from "../UserContext";
 
 export default class HomeNavBar extends Component {
   render() {
+    const token = localStorage.getItem("token");
+    // console.log(user._currentValue);
     return (
       <nav
         className="navbar navbar-expand-lg"
@@ -53,16 +55,15 @@ export default class HomeNavBar extends Component {
                 Contact Us
               </Link>
             </li>
-            <li id="dash_nav" className="nav-item">
-              <Link className="nav-link" to="dashboard">
-                <UserConsumer>
-                  {(props) => {
-                    return <div>{props.name}</div>;
-                  }}
-                </UserConsumer>
-                Dashboard
-              </Link>
-            </li>
+            {token != null ? (
+              <li id="dash_nav" className="nav-item">
+                <Link className="nav-link" to="dashboard">
+                  Dashboard
+                </Link>
+              </li>
+            ) : (
+              <></>
+            )}
           </ul>
         </div>
       </nav>

@@ -1,9 +1,34 @@
 import { React, Component } from "react";
 
 const PasswordCard = ({ nextStep, handleChange, values }) => {
-  const Continue = (e) => {
+  const Submit = async (e) => {
     e.preventDefault();
-    nextStep();
+    const API_BASE_URL = "https://apis.mazimatic.com";
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        const error = res;
+        console.log(error);
+      }
+
+      const data = json;
+      localStorage.setItem("token", data.token);
+      window.location.reload(false);
+
+      return;
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div id="enter_password_form" className="cards">
@@ -46,7 +71,7 @@ const PasswordCard = ({ nextStep, handleChange, values }) => {
         </div>
         <div className="submit-button pb-5">
           <button
-            onClick={Continue}
+            onClick={Submit}
             id="loginwithpass_btn"
             type="button"
             className="btn two"

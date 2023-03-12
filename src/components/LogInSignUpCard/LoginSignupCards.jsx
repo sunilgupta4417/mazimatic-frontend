@@ -4,6 +4,7 @@ import PasswordCard from "./PasswordCard";
 import PaymentGatewayCard from "./PaymentGatewayCard";
 
 export default class LoginSignupCards extends Component {
+  
   state = {
     step: null,
     email: "",
@@ -12,7 +13,7 @@ export default class LoginSignupCards extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      step: 1,
+      step: localStorage.getItem("token") ? 3 : 1,
     };
   }
   // proceed to the next step
@@ -23,7 +24,7 @@ export default class LoginSignupCards extends Component {
 
   // Handle fields change
   handleChange = (input) => (e) => {
-    console.log(this.state);
+    // console.log(this.state);
     this.setState({ [input]: e.target.value });
   };
 

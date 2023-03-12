@@ -23,7 +23,7 @@ export default class HomeHeaderTags extends Component {
           href="assets/css/bootstrap.min.css"
         />
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/4.0.0/jquery.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="assets/css/main.css" />
         <link
@@ -60,6 +60,17 @@ export default class HomeHeaderTags extends Component {
           rel="stylesheet"
         />
         <link
+  rel="stylesheet"
+  type="text/css"
+  charset="UTF-8"
+  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+/>
+        {/* <link
           rel="preload"
           href="_next/static/css/57d29ff8bfad0099.css"
           as="style"
@@ -68,7 +79,7 @@ export default class HomeHeaderTags extends Component {
           rel="stylesheet"
           href="_next/static/css/57d29ff8bfad0099.css"
           data-n-g=""
-        />
+        /> */}
         <link
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
           rel="stylesheet"

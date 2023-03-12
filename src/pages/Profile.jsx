@@ -4,7 +4,73 @@ import UserDashboardHeaderTags from "../components/UserDashboarcHeaderTags";
 import UserDashboardFooterTags from "../components/UserDashboardFooter";
 
 export default class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: null,
+      name: null,
+      mobile_or_telegram: null,
+      bnb_wallet_address: null,
+      eth_wallet_address: null,
+    };
+  }
+
+  componentDidMount() {
+    const API_BASE_URL = "https://apis.mazimatic.com";
+    fetch(`${API_BASE_URL}/api/getuser`, {
+      headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+    })
+      .then((resp) => resp.json())
+      .then((json) => {
+        console.log(json.user);
+        if (json.user) {
+          console.log(json.user);
+          this.setState({
+            email: json.user.email,
+            name: json.user.name,
+            mobile_or_telegram: json.user.mobile_or_telegram,
+            bnb_wallet_address: json.user.bnb_wallet_address,
+            eth_wallet_address: json.user.eth_wallet_address,
+          });
+        } else {
+          localStorage.clear();
+        }
+      });
+  }
+
   render() {
+    const Submit = async (e) => {
+      const API_BASE_URL = "https://apis.mazimatic.com";
+      const values = this.state;
+      e.preventDefault();
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/updateuser`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          body: JSON.stringify({
+            email: values.email,
+            name: values.name,
+            mobile_or_telegram: values.mobile_or_telegram,
+            bnb_wallet_address: values.bnb_wallet_address,
+            eth_wallet_address: values.eth_wallet_address,
+          }),
+        });
+        const json = await res.json();
+        if (!res.ok) {
+          const error = res;
+          console.log(error);
+        }
+        alert(json.message);
+        // window.location.reload(true);
+        console.log(json);
+        return;
+      } catch (error) {
+        console.log(error);
+      }
+    };
     return (
       <>
         <UserDashboardHeaderTags />
@@ -68,7 +134,12 @@ export default class Profile extends Component {
                                 <input
                                   name="ctl00$ContentPlaceHolder1$email_txt"
                                   type="text"
-                                  defaultValue="sunilgupta4417@gmail.com"
+                                  defaultValue={this.state.email}
+                                  onChange={(event) => {
+                                    this.setState({
+                                      email: event.target.value,
+                                    });
+                                  }}
                                   id="ContentPlaceHolder1_email_txt"
                                   className="cstm_input"
                                   placeholder=""
@@ -85,6 +156,12 @@ export default class Profile extends Component {
                               <div className="input-group">
                                 <input
                                   name="ctl00$ContentPlaceHolder1$name_txt"
+                                  defaultValue={this.state.name}
+                                  onChange={(event) => {
+                                    this.setState({
+                                      name: event.target.value,
+                                    });
+                                  }}
                                   type="text"
                                   id="ContentPlaceHolder1_name_txt"
                                   placeholder=""
@@ -102,6 +179,12 @@ export default class Profile extends Component {
                                 <input
                                   name="ctl00$ContentPlaceHolder1$mobile_or_telegram_txt"
                                   type="text"
+                                  defaultValue={this.state.mobile_or_telegram}
+                                  onChange={(event) => {
+                                    this.setState({
+                                      mobile_or_telegram: event.target.value,
+                                    });
+                                  }}
                                   id="ContentPlaceHolder1_mobile_or_telegram_txt"
                                   className="cstm_input"
                                   placeholder=""
@@ -118,6 +201,12 @@ export default class Profile extends Component {
                                 <input
                                   name="ctl00$ContentPlaceHolder1$bnb_wallet_address"
                                   type="text"
+                                  defaultValue={this.state.bnb_wallet_address}
+                                  onChange={(event) => {
+                                    this.setState({
+                                      bnb_wallet_address: event.target.value,
+                                    });
+                                  }}
                                   id="ContentPlaceHolder1_bnb_wallet_address"
                                   className="cstm_input"
                                   placeholder=""
@@ -134,6 +223,12 @@ export default class Profile extends Component {
                                 <input
                                   name="ctl00$ContentPlaceHolder1$eth_wallet_address"
                                   type="text"
+                                  defaultValue={this.state.eth_wallet_address}
+                                  onChange={(event) => {
+                                    this.setState({
+                                      eth_wallet_address: event.target.value,
+                                    });
+                                  }}
                                   id="ContentPlaceHolder1_eth_wallet_address"
                                   className="cstm_input"
                                   placeholder=""
@@ -145,6 +240,7 @@ export default class Profile extends Component {
                             <div className="text-center pt-3">
                               <input
                                 type="submit"
+                                onClick={Submit}
                                 name="ctl00$ContentPlaceHolder1$savebtn"
                                 defaultValue="Update Profile"
                                 id="ContentPlaceHolder1_savebtn"

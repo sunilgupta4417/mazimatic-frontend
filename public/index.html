@@ -1,15 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Mazi matic</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />   
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--   Core JS Files   -->
+    <!-- <script
+          src="https://epay.me/sdk/websdk.js"
+          id="epay-sdk"
+          data-nscript="afterInteractive"
+        ></script>
+    <script>
+      function pay(){
+      const options = {
+        channelId: "WEB",
+        customerId: "c36d44a38e4c49d1ae43d6e66f6c9646",
+        merchantType: "ECOMM",
+        merchantId: "63e8afebfcbda19984d1865a",
+        orderID: "202303110527048234561587",
+        orderDescription: "BNB",
+        orderAmount: 200,
+        orderCurrency: "USD",
+        emailId: "T61C8KWR",
+        merchantLogo: "https://mazimatic.com/assets/logo/mazimatic_logo_db.png",
+        showSavedCardsFeature: true,
+        successHandler: async function (response) {
+          window.location.href =
+            "https://mazimatic.com/epay-success.aspx?transactionid=" +
+            response.response.transactionid;
+        },
+        failedHandler: async function (response) {
+          window.location.href =
+            "https://mazimatic.com/epay-failed.aspx?transactionid=";
+        },
+      };
+      const epay = new Epay(options);
+      epay.open(options);
+    }
+    </script> -->
   </body>
 </html>

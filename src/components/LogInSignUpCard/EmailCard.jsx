@@ -1,9 +1,37 @@
 import { React, Component } from "react";
 
 const EmailCard = ({ nextStep, handleChange, values }) => {
-  const Continue = (e) => {
+  const Continue = async (e) => {
     e.preventDefault();
-    nextStep();
+    const API_BASE_URL = "https://apis.mazimatic.com";
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/checkemail`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values.email,
+        }),
+      });
+      const json = await res.json();
+      console.log(json);
+      if (!res.ok) {
+        const error = res;
+        console.log(error);
+      }
+      if (json.user) {
+        nextStep();
+      }
+      if (json.email) {
+        alert("Password sent to your email address");
+        nextStep();
+      }
+      // nextStep();
+      return;
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div id="signin_pnl" className="cards">

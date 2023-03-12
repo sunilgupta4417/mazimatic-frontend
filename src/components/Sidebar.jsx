@@ -1,8 +1,13 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+import { Link,redirect  } from 'react-router-dom';
 
 export default class Sidebar extends Component {
     render(){
+      const Logout = (e)=>{
+        e.preventDefault();
+        localStorage.clear();
+        window.location.replace("/");
+      }
         return (
           <div className="sidebar" data-color="purple" data-background-color="black">
           <div className="logo">
@@ -43,7 +48,7 @@ export default class Sidebar extends Component {
                 </Link>
               </li>
               <li className="nav-item ">
-                <Link className="nav-link" to="/">
+                <Link className="nav-link" onClick={Logout}>
                   <i className="material-icons">exit_to_app</i>
                   <p>Log Out</p>
                 </Link>
