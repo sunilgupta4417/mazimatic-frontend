@@ -1,15 +1,63 @@
 import { React, useState, useEffect } from "react";
 // import { Helmet } from "react-helmet";
 
-const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
-  const Continue = (e, values) => {
-    console.log(values);
+const PaymentGatewayCard = () => {
+  const [amount, setAmount] = useState("");
+  const [token, setToken] = useState("");
+
+  const totalToken = (event) => {
+    const amt = event.target.value;
+    setAmount(amt);
+    const token = event.target.value / 0.0035;
+    setToken(token);
   };
 
-  const [token, setToken] = useState("");
-  const totalToken = (event) => {
-    const amount = event.target.value / 0.0035;
-    setToken(amount);
+  const initializeEpay = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://epay.me/sdk/v1/stage-websdk.js";
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+
+      document.body.appendChild(script);
+    });
+  };
+
+  const BuyNow = async () => {
+    const res = await initializeEpay();
+
+    if (!res) {
+      alert("Epay SDK Failed to load");
+      return;
+    }
+    const options = {
+      channelId: "WEB",
+      customerId: "c36d44a38e4c49d1ae43d6e66f6c9646",
+      merchantType: "ECOMM",
+      merchantId: "63e8afebfcbda19984d1865a",
+      orderID: "202303110527048234561587",
+      orderDescription: "BNB",
+      orderAmount: 200,
+      orderCurrency: "USD",
+      emailId: "T61C8KWR",
+      merchantLogo: "https://mazimatic.com/assets/logo/mazimatic_logo_db.png",
+      showSavedCardsFeature: true,
+      successHandler: async function (response) {
+        window.location.href =
+          "https://mazimatic.com/epay-success.aspx?transactionid=" +
+          response.response.transactionid;
+      },
+      failedHandler: async function (response) {
+        window.location.href =
+          "https://mazimatic.com/epay-failed.aspx?transactionid=";
+      },
+    };
+    const paymentObject = new window.Epay(options);
+    paymentObject.open(options);
   };
   return (
     <>
@@ -46,7 +94,7 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
             </button>
             <input
               name="total_amt_txt"
-              type="text"
+              type="number"
               id="total_amt_txt"
               onChange={totalToken}
               className="form-control dash_input"
@@ -151,7 +199,7 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
             </div>
             <div className="text-center">
               <button
-                // onClick={handleClick}
+                onClick={BuyNow}
                 id="loginwithpass_btn"
                 type="button"
                 className="buy_button"
