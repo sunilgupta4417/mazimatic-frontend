@@ -36,9 +36,9 @@ export default class HomeNavBar extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="#vision-content">
+              <a className="nav-link" href="#vision-content">
                 Our Vision
-              </Link>
+              </a>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="http://nft.mazimatic.com">
@@ -46,14 +46,14 @@ export default class HomeNavBar extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="#Features">
+              <a className="nav-link" href="#Features">
                 Features
-              </Link>
+              </a>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="#Contact">
+              <a className="nav-link" href="#Contact">
                 Contact Us
-              </Link>
+              </a>
             </li>
             {token != null ? (
               <li id="dash_nav" className="nav-item">

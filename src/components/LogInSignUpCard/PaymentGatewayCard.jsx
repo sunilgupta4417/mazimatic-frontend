@@ -1,33 +1,64 @@
 import { React, useState, useEffect } from "react";
 // import { Helmet } from "react-helmet";
 
-const PaymentGatewayCard = () => {
+const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
   const [amount, setAmount] = useState("");
   const [token, setToken] = useState("");
-
+  const [blockChain, setBlockChain] = useState("BNB");
+  const [paymentType, setPaymentType] = useState("coin-payment");
+  const user = localStorage.getItem("user");
+  console.log(user);
   const totalToken = (event) => {
-    const amt = event.target.value;
-    setAmount(amt);
-    const token = event.target.value / 0.0035;
-    setToken(token);
+    const regex = /^[0-9]*$/; // pattern to match inline numbers
+    if (regex.test(event.target.value)) {
+      const token = event.target.value / 0.005;
+      setAmount(event.target.value);
+      setToken(token);
+    } else {
+      alert("Please enter valid number of amount");
+    }
   };
 
-  const initializeEpay = () => {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = "https://epay.me/sdk/v1/stage-websdk.js";
-      script.onload = () => {
-        resolve(true);
-      };
-      script.onerror = () => {
-        resolve(false);
-      };
-
-      document.body.appendChild(script);
-    });
+  const onChangeBlockChain = (ev) => {
+    setBlockChain(ev.target.value);
   };
 
-  const BuyNow = async () => {
+  const onChangePaymentType = (ev) => {
+    setPaymentType(ev.target.value);
+  };
+
+  const BuyNow = () => {
+    if (token == null || token == "") {
+      alert("Please enter amount to make buy tokens");
+      return;
+    }
+    if (paymentType == "coin-payment") {
+      CoinPayment();
+    } else if (paymentType == "e-pay") {
+      ePay();
+    } else if (paymentType == "pay-baba") {
+      PayBaba();
+    }
+  };
+  const CoinPayment = () => {
+    console.log(paymentType);
+  };
+  const ePay = async () => {
+    const initializeEpay = () => {
+      return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = "https://epay.me/sdk/v1/stage-websdk.js";
+        script.onload = () => {
+          resolve(true);
+        };
+        script.onerror = () => {
+          resolve(false);
+        };
+
+        document.body.appendChild(script);
+      });
+    };
+
     const res = await initializeEpay();
 
     if (!res) {
@@ -40,8 +71,8 @@ const PaymentGatewayCard = () => {
       merchantType: "ECOMM",
       merchantId: "63e8afebfcbda19984d1865a",
       orderID: "202303110527048234561587",
-      orderDescription: "BNB",
-      orderAmount: 200,
+      orderDescription: blockChain,
+      orderAmount: amount,
       orderCurrency: "USD",
       emailId: "T61C8KWR",
       merchantLogo: "https://mazimatic.com/assets/logo/mazimatic_logo_db.png",
@@ -58,6 +89,13 @@ const PaymentGatewayCard = () => {
     };
     const paymentObject = new window.Epay(options);
     paymentObject.open(options);
+  };
+  const PayBaba = () => {
+    window.open(
+      `https://payments.paybaba.co/pay/63f784d54d84e1b05d5d2ee2/6000/${user}/${amount}`,
+      "_child",
+      "width=375,height=645"
+    );
   };
   return (
     <>
@@ -94,8 +132,9 @@ const PaymentGatewayCard = () => {
             </button>
             <input
               name="total_amt_txt"
-              type="number"
+              type="text"
               id="total_amt_txt"
+              value={amount}
               onChange={totalToken}
               className="form-control dash_input"
               placeholder="eg. 1000"
@@ -123,20 +162,21 @@ const PaymentGatewayCard = () => {
           <button className="btns check" type="button">
             <img src="tool_imgs/Binance.png" alt="" /> BNB{" "}
             <input
-              defaultValue="BNB"
+              value={"BNB"}
               name="radioCrypto"
               type="radio"
-              id="radioBnb"
+              onChange={onChangeBlockChain}
               defaultChecked="checked"
             />
           </button>
           <button className="btns check-btn" type="button" id="button-addon2">
             <img src="tool_imgs/eth.png" alt="" /> Ethereum{" "}
             <input
-              defaultValue="ETH"
+              value={"ETH"}
               name="radioCrypto"
               type="radio"
               id="radioEth"
+              onChange={onChangeBlockChain}
             />
           </button>
         </div>
@@ -151,10 +191,11 @@ const PaymentGatewayCard = () => {
             >
               <div className="col-auto pt_7">
                 <input
-                  defaultValue="crypto"
                   name="radioGateway"
                   type="radio"
                   id="coinpayments_rdo"
+                  value={"coin-payment"}
+                  onChange={onChangePaymentType}
                   defaultChecked="checked"
                 />
                 &nbsp;&nbsp; <img src="tool_imgs/Coin_Payments_1.svg" alt="" />
@@ -167,11 +208,11 @@ const PaymentGatewayCard = () => {
             >
               <div className="col-auto pt_7">
                 <input
-                  defaultValue="card"
                   name="radioGateway"
                   type="radio"
                   id="epay_rdo"
-                  defaultChecked="checked"
+                  value={"e-pay"}
+                  onChange={onChangePaymentType}
                 />
                 &nbsp;&nbsp; <img src="images/Epay1.png" alt="" />
               </div>
@@ -185,11 +226,11 @@ const PaymentGatewayCard = () => {
             >
               <div className="col-auto pt_7">
                 <input
-                  defaultValue="upi"
                   name="radioGateway"
                   type="radio"
                   id="upi_rdo"
-                  defaultChecked="checked"
+                  value={"pay-baba"}
+                  onChange={onChangePaymentType}
                 />
                 &nbsp;&nbsp; <img src="images/upi.svg" alt="" />
               </div>

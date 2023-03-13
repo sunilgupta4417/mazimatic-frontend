@@ -33,9 +33,9 @@ function App() {
           })
             .then((resp) => resp.json())
             .then((json) => {
-              console.log(json.user);
+              // console.log(json.user.id);
               if (json.user) {
-                localStorage.setItem("user", token);
+                localStorage.setItem("user", json.user.id);
                 redirect("/");
               } else {
                 localStorage.clear();
@@ -64,7 +64,7 @@ function App() {
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/paybaba" element={<PaymentTest />} />
+            <Route path="/test" element={<PaymentTest />} />
           </Routes>
         </Router>
       </div>
