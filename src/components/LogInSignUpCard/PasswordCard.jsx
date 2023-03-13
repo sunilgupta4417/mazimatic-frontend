@@ -59,7 +59,7 @@ const PasswordCard = ({ nextStep, handleChange, values }) => {
           <input
             type="submit"
             name="forget_password_btn"
-            defaultValue="Forget Password?"
+            Value="Forget Password?"
             id="forget_password_btn"
             className="btn btn-link btn-sm"
             style={{
