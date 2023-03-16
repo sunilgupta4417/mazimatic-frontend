@@ -1,13 +1,23 @@
 import { React, useState, useEffect } from "react";
+import { v4 as uuid } from "uuid";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // import { Helmet } from "react-helmet";
 
 const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
+  const navigate = useNavigate();
+  const API_BASE_URL = "https://apis.mazimatic.com";
   const [amount, setAmount] = useState("");
   const [token, setToken] = useState("");
   const [blockChain, setBlockChain] = useState("BNB");
   const [paymentType, setPaymentType] = useState("coin-payment");
+  const [transactionId, setTransactionId] = useState(null);
+  const [transactionStatus, setTransactionStatus] = useState("pending");
+
   const user = localStorage.getItem("user");
-  console.log(user);
+  const order_id = uuid();
   const totalToken = (event) => {
     const regex = /^[0-9]*$/; // pattern to match inline numbers
     if (regex.test(event.target.value)) {
@@ -15,7 +25,9 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
       setAmount(event.target.value);
       setToken(token);
     } else {
-      alert("Please enter valid number of amount");
+      toast.error(`Please enter valid number of amount`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   };
 
@@ -28,8 +40,11 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
   };
 
   const BuyNow = () => {
+    console.log("hi");
     if (token == null || token == "") {
-      alert("Please enter amount to make buy tokens");
+      toast.error(`Please enter valid number of amount`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       return;
     }
     if (paymentType == "coin-payment") {
@@ -40,14 +55,58 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
       PayBaba();
     }
   };
-  const CoinPayment = () => {
-    console.log(paymentType);
+  const CoinPayment = async () => {
+    // console.log(paymentType);
+    // const createTransaction = async () => {
+    try {
+      const response = await fetch("https://www.coinpayments.net/api.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          HMAC: "2845f460972ecd48601831ea8cfd839eb747507b2dd7e1d43a462720db6d2c14",
+          "Content-Length": 0,
+        },
+        body: new URLSearchParams({
+          cmd: "create_transaction",
+          amount: 10,
+          currency1: "USD",
+          currency2: "BTC",
+          buyer_email: "example@example.com",
+          item_name: "Test Item",
+        }),
+      });
+      const result = await response.json();
+
+      setTransactionId(result.result.txn_id);
+    } catch (error) {
+      console.log(error);
+    }
+    // };
+
+    // const fetchTransactionDetails = async () => {
+    //   try {
+    //     const response = await fetch(
+    //       `https://www.coinpayments.net/api.php?cmd=get_tx_info&txid=${transactionId}`,
+    //       {
+    //         headers: {
+    //           HMAC: "YOUR_SECRET_HMAC",
+    //         },
+    //       }
+    //     );
+    //     const result = await response.json();
+
+    //     setTransactionStatus(result.result.status);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
   };
-  const ePay = async () => {
+  const ePay = async (e) => {
+    console.log("ePay");
     const initializeEpay = () => {
       return new Promise((resolve) => {
         const script = document.createElement("script");
-        script.src = "https://epay.me/sdk/v1/stage-websdk.js";
+        script.src = "https://epay.me/sdk/v2/stage-websdk.js";
         script.onload = () => {
           resolve(true);
         };
@@ -70,7 +129,7 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
       customerId: "c36d44a38e4c49d1ae43d6e66f6c9646",
       merchantType: "ECOMM",
       merchantId: "63e8afebfcbda19984d1865a",
-      orderID: "202303110527048234561587",
+      orderID: order_id,
       orderDescription: blockChain,
       orderAmount: amount,
       orderCurrency: "USD",
@@ -78,13 +137,17 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
       merchantLogo: "https://mazimatic.com/assets/logo/mazimatic_logo_db.png",
       showSavedCardsFeature: true,
       successHandler: async function (response) {
-        window.location.href =
-          "https://mazimatic.com/epay-success.aspx?transactionid=" +
-          response.response.transactionid;
+        setTransactionId(response.response.transactionid);
+        await setTransactionStatus("Success");
+        await setTransactionId(response.response.transactionid);
+        if (transactionStatus == "Success") {
+          createTransaction();
+        }
+        navigate("/payment-success");
       },
       failedHandler: async function (response) {
-        window.location.href =
-          "https://mazimatic.com/epay-failed.aspx?transactionid=";
+        navigate("/payment-fail");
+        createTransaction();
       },
     };
     const paymentObject = new window.Epay(options);
@@ -92,10 +155,37 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
   };
   const PayBaba = () => {
     window.open(
-      `https://payments.paybaba.co/pay/63f784d54d84e1b05d5d2ee2/6000/${user}/${amount}`,
+      `https://payments.paybaba.co/pay/63f784d54d84e1b05d5d2ee2/${order_id}/${user}/${amount}`,
       "_child",
       "width=375,height=645"
     );
+    createTransaction();
+  };
+  const createTransaction = async () => {
+    // console.log("createTransaction");
+    const data = {
+      order_id: order_id,
+      transaction_id: transactionId,
+      transaction_amt: amount,
+      gateway: paymentType,
+      transaction_status: transactionStatus,
+      stock: token,
+      description: paymentType,
+      chain: blockChain,
+    };
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      body: JSON.stringify(data),
+    };
+
+    fetch(`${API_BASE_URL}/api/create-transaction`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
   };
   return (
     <>

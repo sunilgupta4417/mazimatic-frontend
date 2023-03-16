@@ -1,8 +1,14 @@
-import { React, Component } from "react";
+import { React, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PasswordCard = ({ nextStep, handleChange, values }) => {
+  const [loading, setLoading] = useState(false);
+
   const Submit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     const API_BASE_URL = "https://apis.mazimatic.com";
     try {
       const res = await fetch(`${API_BASE_URL}/api/login`, {
@@ -17,9 +23,13 @@ const PasswordCard = ({ nextStep, handleChange, values }) => {
       });
       const json = await res.json();
       if (!res.ok) {
-        const error = res;
-        console.log(error);
+        setLoading(false);
+        toast.error(`Error : ${json.message}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        return;
       }
+      setLoading(false);
 
       const data = json;
       localStorage.setItem("token", data.token);
@@ -27,7 +37,10 @@ const PasswordCard = ({ nextStep, handleChange, values }) => {
 
       return;
     } catch (error) {
-      console.log(error);
+      setLoading(false);
+      toast.error(`Error : ${error}`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   };
   return (
@@ -59,7 +72,7 @@ const PasswordCard = ({ nextStep, handleChange, values }) => {
           <input
             type="submit"
             name="forget_password_btn"
-            Value="Forget Password?"
+            value={"Forget Password"}
             id="forget_password_btn"
             className="btn btn-link btn-sm"
             style={{
@@ -75,8 +88,9 @@ const PasswordCard = ({ nextStep, handleChange, values }) => {
             id="loginwithpass_btn"
             type="button"
             className="btn two"
+            disabled={!loading ? "" : "true"}
           >
-            <span>Login</span>
+            {!loading ? <span>Login</span> : <span>Loading</span>}
           </button>
         </div>
         <div className="card-bottom-text">

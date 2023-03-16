@@ -60,16 +60,16 @@ export default class HomeHeaderTags extends Component {
           rel="stylesheet"
         />
         <link
-  rel="stylesheet"
-  type="text/css"
-  charset="UTF-8"
-  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-/>
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-/>
+          rel="stylesheet"
+          type="text/css"
+          charset="UTF-8"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+        />
         {/* <link
           rel="preload"
           href="_next/static/css/57d29ff8bfad0099.css"
@@ -89,7 +89,6 @@ export default class HomeHeaderTags extends Component {
           type="text/javascript"
           defer=""
         ></script>
-        <body />
       </Helmet>
     );
   }

@@ -135,11 +135,7 @@ export default class Profile extends Component {
                                   name="ctl00$ContentPlaceHolder1$email_txt"
                                   type="text"
                                   defaultValue={this.state.email}
-                                  onChange={(event) => {
-                                    this.setState({
-                                      email: event.target.value,
-                                    });
-                                  }}
+                                  readOnly={true}
                                   id="ContentPlaceHolder1_email_txt"
                                   className="cstm_input"
                                   placeholder=""
@@ -155,6 +151,7 @@ export default class Profile extends Component {
                             <span className="bmd-form-group">
                               <div className="input-group">
                                 <input
+                                  autoComplete="off"
                                   name="ctl00$ContentPlaceHolder1$name_txt"
                                   defaultValue={this.state.name}
                                   onChange={(event) => {
@@ -177,6 +174,7 @@ export default class Profile extends Component {
                             <span className="bmd-form-group">
                               <div className="input-group">
                                 <input
+                                  autoComplete="off"
                                   name="ctl00$ContentPlaceHolder1$mobile_or_telegram_txt"
                                   type="text"
                                   defaultValue={this.state.mobile_or_telegram}
@@ -199,6 +197,7 @@ export default class Profile extends Component {
                             <span className="bmd-form-group">
                               <div className="input-group">
                                 <input
+                                  autoComplete="off"
                                   name="ctl00$ContentPlaceHolder1$bnb_wallet_address"
                                   type="text"
                                   defaultValue={this.state.bnb_wallet_address}
@@ -221,6 +220,7 @@ export default class Profile extends Component {
                             <span className="bmd-form-group">
                               <div className="input-group">
                                 <input
+                                  autoComplete="off"
                                   name="ctl00$ContentPlaceHolder1$eth_wallet_address"
                                   type="text"
                                   defaultValue={this.state.eth_wallet_address}

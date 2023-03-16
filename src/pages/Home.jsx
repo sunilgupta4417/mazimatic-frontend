@@ -50,7 +50,7 @@ export default function Home() {
           id="toolBox"
           style={{
             fontFamily: '"Alumni Sans", sans-serif',
-            paddingBottom: 120,
+            paddingBottom: 150,
           }}
         >
           <HomeNavBar />

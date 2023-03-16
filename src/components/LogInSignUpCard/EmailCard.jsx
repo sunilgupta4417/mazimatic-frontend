@@ -1,8 +1,19 @@
-import { React, Component } from "react";
+import { React, Component, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EmailCard = ({ nextStep, handleChange, values }) => {
+  const [loading, setLoading] = useState(false);
   const Continue = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    if (values.email == null || values.email == "") {
+      setLoading(false);
+      toast.error(`Please enter email address`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      return;
+    }
     const API_BASE_URL = "https://apis.mazimatic.com";
     try {
       const res = await fetch(`${API_BASE_URL}/api/checkemail`, {
@@ -17,17 +28,21 @@ const EmailCard = ({ nextStep, handleChange, values }) => {
       const json = await res.json();
       console.log(json);
       if (!res.ok) {
-        const error = res;
-        console.log(error);
+        toast.error(`Error : ${res}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
       if (json.user) {
+        setLoading(false);
         nextStep();
       }
       if (json.email) {
-        alert("Password sent to your email address");
+        setLoading(false);
+        toast.success(`Password sent to ${values.email}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
         nextStep();
       }
-      // nextStep();
       return;
     } catch (error) {
       console.log(error);
@@ -80,8 +95,9 @@ const EmailCard = ({ nextStep, handleChange, values }) => {
             id="loginbtn"
             type="button"
             className="btn two"
+            disabled={!loading ? "" : "true"}
           >
-            <span>Submit</span>
+            {!loading ? <span>Submit</span> : <span>Loading</span>}
           </button>
         </div>
         <div className="card-bottom-text">

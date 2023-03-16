@@ -16,10 +16,15 @@ export default function Dashboard() {
     setIsLoaded(true);
     setTimeout(() => {
       setIsLoaded(false);
-    }, 2000);
+    }, 3000);
   }, []);
   if (isLoaded) {
-    return <LoadingScreen />;
+    return (
+      <>
+        <UserDashboardHeaderTags />
+        <LoadingScreen />
+      </>
+    );
   } else {
     return (
       <>

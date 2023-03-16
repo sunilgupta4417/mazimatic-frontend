@@ -1,10 +1,35 @@
-import {React, Component} from "react";
+import { React, Component } from "react";
 
-import Sidebar from '../components/Sidebar'
+import Sidebar from "../components/Sidebar";
 import UserDashboardHeaderTags from "../components/UserDashboarcHeaderTags";
 import UserDashboardFooterTags from "../components/UserDashboardFooter";
 
 export default class Transactions extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      transactions: [],
+      loading: true,
+    };
+  }
+  componentDidMount() {
+    const API_BASE_URL = "https://apis.mazimatic.com";
+    fetch(`${API_BASE_URL}/api/get-transaction`, {
+      headers: {
+        // "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((res) => res.json())
+      .then(
+        (transactions) => {
+          this.setState({ transactions: transactions.message, loading: false });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
   render() {
     return (
       <>
@@ -88,77 +113,44 @@ export default class Transactions extends Component {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>202303051210173348009264</td>
-                            <td>2023-3-5 12:10:17</td>
-                            <td>200</td>
-                            <td>PayBaba</td>
-                            <td>57142.8571428571</td>
-                            <td>
-                              <span
-                                id="ContentPlaceHolder1_Repeater1_transaction_status_0"
-                                style={{ color: "#EED93F" }}
-                              >
-                                Pending
-                              </span>
-                            </td>
-                            <td>
-                              <a
-                                className="btn btn-sm btn-warning"
-                                href="view-receipt.html"
-                              >
-                                View
-                              </a>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>202303050548456928846481</td>
-                            <td>2023-3-5 05:48:51</td>
-                            <td>200</td>
-                            <td>PayBaba</td>
-                            <td>57142.8571428571</td>
-                            <td>
-                              <span
-                                id="ContentPlaceHolder1_Repeater1_transaction_status_1"
-                                style={{ color: "#EED93F" }}
-                              >
-                                Pending
-                              </span>
-                            </td>
-                            <td>
-                              <a
-                                className="btn btn-sm btn-warning"
-                                href="view-receipt.html"
-                              >
-                                View
-                              </a>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>202303050547057355272648</td>
-                            <td>2023-3-5 05:47:13</td>
-                            <td>200</td>
-                            <td>PayBaba</td>
-                            <td>57142.8571428571</td>
-                            <td>
-                              <span
-                                id="ContentPlaceHolder1_Repeater1_transaction_status_2"
-                                style={{ color: "#EED93F" }}
-                              >
-                                Pending
-                              </span>
-                            </td>
-                            <td>
-                              <a
-                                className="btn btn-sm btn-warning"
-                                href="view-receipt.html"
-                              >
-                                View
-                              </a>
-                            </td>
-                          </tr>
+                          {this.state.loading == true ? (
+                            <tr>
+                              <td colSpan={7} className="text-center">
+                                <span id="ContentPlaceHolder1_lblpage">
+                                  Loading
+                                </span>
+                              </td>
+                            </tr>
+                          ) : (
+                            this.state.transactions.map((transaction) => (
+                              <tr>
+                                <td>{transaction.order_id}</td>
+                                <td>{transaction.transaction_date}</td>
+                                <td>{transaction.transaction_amt}</td>
+                                <td>{transaction.gateway}</td>
+                                <td>{transaction.stock}</td>
+                                <td>
+                                  <span
+                                    id="ContentPlaceHolder1_Repeater1_transaction_status_0"
+                                    style={{ color: "#EED93F" }}
+                                  >
+                                    {transaction.transaction_status}
+                                  </span>
+                                </td>
+                                <td>
+                                  <a
+                                    className="btn btn-sm btn-warning"
+                                    href="#"
+                                  >
+                                    View
+                                  </a>
+                                </td>
+                              </tr>
+                            ))
+                          )}
                         </tbody>
                       </table>
+
                       <div className="row">
                         <div className="col-lg-12">
                           <div className="table-responsive">

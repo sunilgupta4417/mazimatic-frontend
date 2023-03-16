@@ -15,9 +15,9 @@ import Transactions from "./pages/Transactions";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
-import PaymentTest from "./pages/Paymenttest";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentFaild from "./pages/PaymentFaild";
 import "slick-carousel/slick/slick.css";
-
 function App() {
   // const [loading, setLoading] = useState(true);
   // const [userSession, setUserSession] = useState(true);
@@ -59,12 +59,13 @@ function App() {
       <div className="app">
         <Router>
           <Routes>
-            <Route path="/*" element={<Home />} />
+            <Route exact path="/*" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/test" element={<PaymentTest />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
+            <Route path="/payment-fail" element={<PaymentFaild />} />
           </Routes>
         </Router>
       </div>
