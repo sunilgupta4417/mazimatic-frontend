@@ -323,7 +323,7 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
                 &nbsp;&nbsp; <img src="images/upi.svg" alt="" />
               </div>
               <div className="col-auto text-start">
-                <img src="images/upi_all.png" />
+                <img src="images/upi_all.png" alt="UPI all" />
               </div>
             </div>
             <div className="text-center">

@@ -17,6 +17,7 @@ import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFaild from "./pages/PaymentFaild";
+import MyComponent from "./pages/MyComponent";
 import "slick-carousel/slick/slick.css";
 function App() {
   // const [loading, setLoading] = useState(true);
@@ -66,6 +67,7 @@ function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/payment-fail" element={<PaymentFaild />} />
+            <Route path="/test" element={<MyComponent />} />
           </Routes>
         </Router>
       </div>

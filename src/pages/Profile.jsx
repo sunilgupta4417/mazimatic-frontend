@@ -1,4 +1,6 @@
-import { React, Component } from "react";
+import { React, Component, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "../components/Sidebar";
 import UserDashboardHeaderTags from "../components/UserDashboarcHeaderTags";
 import UserDashboardFooterTags from "../components/UserDashboardFooter";
@@ -12,6 +14,7 @@ export default class Profile extends Component {
       mobile_or_telegram: null,
       bnb_wallet_address: null,
       eth_wallet_address: null,
+      loading: false,
     };
   }
 
@@ -24,7 +27,6 @@ export default class Profile extends Component {
       .then((json) => {
         console.log(json.user);
         if (json.user) {
-          console.log(json.user);
           this.setState({
             email: json.user.email,
             name: json.user.name,
@@ -40,6 +42,7 @@ export default class Profile extends Component {
 
   render() {
     const Submit = async (e) => {
+      this.setState({ loading: true });
       const API_BASE_URL = "https://apis.mazimatic.com";
       const values = this.state;
       e.preventDefault();
@@ -61,11 +64,17 @@ export default class Profile extends Component {
         const json = await res.json();
         if (!res.ok) {
           const error = res;
-          console.log(error);
+          this.setState({ loading: false });
+          toast.error(`${error}`, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          return;
         }
-        alert(json.message);
-        // window.location.reload(true);
-        console.log(json);
+        this.setState({ loading: false });
+        toast.success(`${json.message}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        return;
         return;
       } catch (error) {
         console.log(error);
@@ -75,6 +84,7 @@ export default class Profile extends Component {
       <>
         <UserDashboardHeaderTags />
         <Sidebar />
+        <ToastContainer />
         <div className="main-panel">
           {/* Navbar */}
           <nav
@@ -242,7 +252,12 @@ export default class Profile extends Component {
                                 type="submit"
                                 onClick={Submit}
                                 name="ctl00$ContentPlaceHolder1$savebtn"
-                                defaultValue="Update Profile"
+                                value={
+                                  !this.state.loading
+                                    ? "Update profile"
+                                    : "Loading"
+                                }
+                                disabled={!this.state.loading ? "" : "true"}
                                 id="ContentPlaceHolder1_savebtn"
                                 className="btn btn-success btn-md"
                               />
