@@ -40,7 +40,7 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
   };
 
   const BuyNow = () => {
-    console.log("hi");
+
     if (token == null || token == "") {
       toast.error(`Please enter valid number of amount`, {
         position: toast.POSITION.TOP_RIGHT,
@@ -59,25 +59,30 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
     // console.log(paymentType);
     // const createTransaction = async () => {
     try {
-      const response = await fetch("https://www.coinpayments.net/api.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          HMAC: "2845f460972ecd48601831ea8cfd839eb747507b2dd7e1d43a462720db6d2c14",
-          "Content-Length": 0,
-        },
-        body: new URLSearchParams({
-          cmd: "create_transaction",
-          amount: 10,
-          currency1: "USD",
-          currency2: "BTC",
-          buyer_email: "example@example.com",
-          item_name: "Test Item",
-        }),
-      });
-      const result = await response.json();
+      const response = await fetch(
+        "https://www.coinpayments.net/api.php?version=2&key='2845f460972ecd48601831ea8cfd839eb747507b2dd7e1d43a462720db6d2c14'&format=json",
+        {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            HMAC: "5590eac015e7692902e1a9cd5464f1d305a4b593d2f1343d826ac5affc5ac6f960a5167284f9bf31295cba0e04df9d8f7087935b5344c468ccf2dd036e159102",
+            "Content-Length": 0,
+          },
+          body: new URLSearchParams({
+            cmd: "create_transaction",
+            amount: 10,
+            currency1: "USD",
+            currency2: "BTC",
+            buyer_email: "example@example.com",
+            item_name: "Test Item",
+          }),
+        }
+      );
 
-      setTransactionId(result.result.txn_id);
+      // const result = await response.json();
+      console.log(response);
+      // setTransactionId(result.result.txn_id);
     } catch (error) {
       console.log(error);
     }

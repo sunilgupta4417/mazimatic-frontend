@@ -3,30 +3,66 @@ import { React, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import UserDashboardHeaderTags from "../components/UserDashboarcHeaderTags";
 import UserDashboardFooterTags from "../components/UserDashboardFooter";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function Settings() {
+const Settings = () => {
   const [curentPassword, setCurentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const ChangePassword = () => {
+  const [loading, setLoading] = useState(false);
+
+  const ChangePassword = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
     if (!curentPassword && !newPassword && !confirmPassword) {
-      alert("Plese enter detais");
+      setLoading(false);
+      toast.error("Plese enter detalis", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      return;
     } else {
       if (newPassword !== confirmPassword) {
-        alert("new password not same");
+        setLoading(false);
+        toast.error("New password and confirm password not match", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
         return;
       }
       const API_BASE_URL = "https://apis.mazimatic.com";
-      fetch(`${API_BASE_URL}/api/getuser`, {
-        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      fetch(`${API_BASE_URL}/api/updatepassword`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          current_password: curentPassword,
+          new_password: newPassword,
+          confirm_password: confirmPassword,
+        }),
       })
         .then((resp) => resp.json())
         .then((json) => {
           console.log(json);
-          if (json) {
-            console.log(json);
+          setLoading(false);
+          if (json.message) {
+            setCurentPassword("");
+            setNewPassword("");
+            setConfirmPassword("");
+            toast.success(`${json.message}`, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+            return;
           } else {
-            console.log(json);
+            setCurentPassword("");
+            setNewPassword("");
+            setConfirmPassword("");
+            toast.error(`Error : ${json.error}`, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+            return;
           }
         });
     }
@@ -34,6 +70,7 @@ export default function Settings() {
   return (
     <>
       <UserDashboardHeaderTags />
+      <ToastContainer />
       <Sidebar />
       <div className="main-panel">
         {/* Navbar */}
@@ -99,6 +136,7 @@ export default function Settings() {
                                 onChange={(e) => {
                                   setCurentPassword(e.target.value);
                                 }}
+                                value={curentPassword}
                                 placeholder=""
                               />
                             </div>
@@ -119,6 +157,7 @@ export default function Settings() {
                                 onChange={(e) => {
                                   setNewPassword(e.target.value);
                                 }}
+                                value={newPassword}
                               />
                             </div>
                           </span>
@@ -138,6 +177,7 @@ export default function Settings() {
                                   setConfirmPassword(e.target.value);
                                 }}
                                 placeholder=""
+                                value={confirmPassword}
                               />
                             </div>
                           </span>
@@ -147,10 +187,11 @@ export default function Settings() {
                             <input
                               type="submit"
                               name="ctl00$ContentPlaceHolder1$changebtn"
-                              defaultValue="Change Password"
+                              value={!loading ? "Change Password" : "Loading"}
                               id="ContentPlaceHolder1_changebtn"
                               className="btn btn-success btn-md"
                               onClick={ChangePassword}
+                              disabled={!loading ? "" : "true"}
                             />
                           </div>
                         </div>
@@ -172,4 +213,5 @@ export default function Settings() {
       <UserDashboardFooterTags />
     </>
   );
-}
+};
+export default Settings;

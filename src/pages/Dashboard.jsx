@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar";
 import LoadingScreen from "../components/LoadingScreen";
 import UserDashboardHeaderTags from "../components/UserDashboarcHeaderTags";
 import UserDashboardFooterTags from "../components/UserDashboardFooter";
+import DashBoardCard from "../components/DashBoard/DashBoardCard";
 export default function Dashboard() {
   const [isLoaded, setIsLoaded] = useState(true);
   useEffect(() => {
@@ -16,15 +17,10 @@ export default function Dashboard() {
     setIsLoaded(true);
     setTimeout(() => {
       setIsLoaded(false);
-    }, 3000);
+    }, 2000);
   }, []);
   if (isLoaded) {
-    return (
-      <>
-        <UserDashboardHeaderTags />
-        <LoadingScreen />
-      </>
-    );
+    return <LoadingScreen />;
   } else {
     return (
       <>
@@ -61,95 +57,7 @@ export default function Dashboard() {
           <div className="content">
             <div className="container-fluid">
               <div className="row">
-                <div className="col-lg-8 offset-lg-2">
-                  <div
-                    className="card text-white"
-                    style={{ backgroundColor: "#000000ba" }}
-                  >
-                    <div
-                      className="text-center pb-1 pt-5"
-                      style={{
-                        color: "#3BFFC4",
-                        fontSize: 26,
-                        fontWeight: 600,
-                        fontStyle: "italic",
-                      }}
-                    >
-                      BUY MAZI TOKENS
-                    </div>
-                    <div className="card-body table-responsive">
-                      <div className="row">
-                        <div
-                          id="ContentPlaceHolder1_amtpnl"
-                          className="col-lg-6 offset-lg-3 pt-3"
-                        >
-                          <div className="text-center">
-                            <div className="radio-toolbar">
-                              <input
-                                defaultValue="BNB"
-                                name="ctl00$ContentPlaceHolder1$radioCrypto"
-                                type="radio"
-                                id="ContentPlaceHolder1_radioBnb"
-                                defaultChecked="checked"
-                              />
-                              <label
-                                className="m-1"
-                                htmlFor="ContentPlaceHolder1_radioBnb"
-                              >
-                                BNB
-                              </label>
-                              <input
-                                defaultValue="ETH"
-                                name="ctl00$ContentPlaceHolder1$radioCrypto"
-                                type="radio"
-                                id="ContentPlaceHolder1_radioEth"
-                              />
-                              <label
-                                className="m-1"
-                                htmlFor="ContentPlaceHolder1_radioEth"
-                              >
-                                ETH
-                              </label>
-                            </div>
-                          </div>
-                          <div className="text-center">
-                            <strong>Enter amount below (in Dollar)</strong>
-                          </div>
-                          <span className="bmd-form-group">
-                            <div className="input-group">
-                              <span className="input-group-addon pt-2">
-                                <i className="material-icons">attach_money</i>
-                              </span>
-                              &nbsp;&nbsp;&nbsp;{" "}
-                              <input
-                                name="ctl00$ContentPlaceHolder1$total_amt_txt"
-                                type="text"
-                                id="ContentPlaceHolder1_total_amt_txt"
-                                className="form-control text-center"
-                                placeholder="eg. 100"
-                                style={{
-                                  color: "White",
-                                  fontSize: 18,
-                                  fontWeight: "bold",
-                                }}
-                              />
-                            </div>
-                          </span>
-                          <div className="text-center pt-3">
-                            <input
-                              type="submit"
-                              name="ctl00$ContentPlaceHolder1$proceedbtn"
-                              defaultValue="Proceed"
-                              id="ContentPlaceHolder1_proceedbtn"
-                              className="proceed_btn"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-lg-6 offset-lg-3 pt-3" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <DashBoardCard />
               </div>
               <div className="row">
                 <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
