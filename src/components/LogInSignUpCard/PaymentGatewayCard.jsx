@@ -1,7 +1,7 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // import { Helmet } from "react-helmet";
@@ -40,7 +40,6 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
   };
 
   const BuyNow = () => {
-    console.log("hi");
     if (token == null || token == "") {
       toast.error(`Please enter valid number of amount`, {
         position: toast.POSITION.TOP_RIGHT,
@@ -58,26 +57,25 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
   const CoinPayment = async () => {
     // console.log(paymentType);
     // const createTransaction = async () => {
+
     try {
-      const response = await fetch("https://www.coinpayments.net/api.php", {
+      const API_BASE_URL = "http://localhost:5001";
+
+      const response = await fetch(`${API_BASE_URL}/api/coinpayment-link`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          HMAC: "2845f460972ecd48601831ea8cfd839eb747507b2dd7e1d43a462720db6d2c14",
+          "Content-Type": "application/json",
           "Content-Length": 0,
         },
-        body: new URLSearchParams({
-          cmd: "create_transaction",
-          amount: 10,
-          currency1: "USD",
-          currency2: "BTC",
-          buyer_email: "example@example.com",
-          item_name: "Test Item",
+        body: JSON.stringify({
+          amount,
+          email: "example@example.com",
         }),
       });
       const result = await response.json();
 
-      setTransactionId(result.result.txn_id);
+      setTransactionId(result.txn_id);
+      window.location.href = result.checkout_url;
     } catch (error) {
       console.log(error);
     }
