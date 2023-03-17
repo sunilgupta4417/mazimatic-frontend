@@ -42,6 +42,7 @@ export default class DashBoardCard extends Component {
 
   // Handle fields change
   handleChange = (input) => (e) => {
+    console.log("LL: DashBoardCard -> handleChange -> input", input);
     this.setState({ [input]: e.target.value });
   };
 
