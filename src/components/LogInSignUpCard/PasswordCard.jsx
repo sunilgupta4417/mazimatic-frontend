@@ -140,10 +140,9 @@ const PasswordCard = ({ nextStep, handleChange, values }) => {
         <div className="card-bottom-text">
           <p className="hr-lines">Payment Partners</p>
         </div>
-        <div className="content-cards d-flex justify-content-around">
+        <div className="content-cards d-flex justify-content-center">
           <div className="coin-img" />
           <div className="payme-img" />
-          <div className="upi-img" />
         </div>
       </div>
     </div>
