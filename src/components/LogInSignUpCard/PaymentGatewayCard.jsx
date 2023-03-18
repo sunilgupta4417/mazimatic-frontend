@@ -3,12 +3,8 @@ import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  CoinPayment,
-  createTransaction,
-  ePay,
-  PayBaba,
-} from "../../utils/payment";
+import { CoinPayment, createTransaction, ePay } from "../../utils/payment";
+import { getPrice } from "../../utils";
 
 // import { Helmet } from "react-helmet";
 
@@ -27,7 +23,9 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
   const totalToken = (event) => {
     const regex = /^[0-9]*$/; // pattern to match inline numbers
     if (regex.test(event.target.value)) {
-      const token = event.target.value / 0.005;
+      const token = parseInt(
+        event.target.value / getPrice(localStorage.getItem("whitelist"))
+      );
       setAmount(event.target.value);
       setToken(token);
     } else {
@@ -46,6 +44,13 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
   };
 
   const BuyNow = async (paymentType) => {
+    if (amount < 200) {
+      toast.error(`Please enter amount >= 200`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      return;
+    }
+
     if (paymentType === "coin-payment") {
       const { txn_id, checkout_url } = await CoinPayment({ amount });
       setTransactionId(txn_id);
@@ -89,7 +94,6 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
         },
       });
     } else if (paymentType == "pay-baba") {
-      PayBaba({ order_id, amount, user });
       createTransaction({
         order_id,
         transaction_id: transactionId,
@@ -108,7 +112,10 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
         <div className="card-title pt-3">
           <h3>Pre-Sale Price</h3>
           <h1 className="price-rate">
-            $ <span id="select_gateway_form_token_rate_lbl">0.0035</span>
+            $
+            <span id="select_gateway_form_token_rate_lbl">
+              {getPrice(localStorage.getItem("whitelist"))}
+            </span>
           </h1>
         </div>
         <div className="progress_pd">
@@ -225,7 +232,7 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
                 <img src="images/cards_all.png" alt="all" />
               </div>
             </div>
-            <div
+            {/* <div
               id="upi_div"
               className="row payment_mth_1 mb-2 text-center pl_10"
             >
@@ -242,7 +249,7 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
               <div className="col-auto text-start">
                 <img src="images/upi_all.png" alt="UPI all" />
               </div>
-            </div>
+            </div> */}
             <div className="text-center">
               <button
                 onClick={() => BuyNow(paymentType)}

@@ -1,6 +1,7 @@
 import { React, Component, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getPrice } from "../../utils";
 
 const EmailCard = ({ nextStep, handleChange, values }) => {
   const [loading, setLoading] = useState(false);
@@ -53,7 +54,10 @@ const EmailCard = ({ nextStep, handleChange, values }) => {
       <div className="card-title pt-3">
         <h3>Pre-Sale Price</h3>
         <h1 className="price-rate">
-          $ <span id="signin_pnl_token_rate_lbl">0.0035</span>
+          ${" "}
+          <span id="signin_pnl_token_rate_lbl">
+            {getPrice(localStorage.getItem("whitelist"))}
+          </span>
         </h1>
       </div>
       <div className="progress_pd">

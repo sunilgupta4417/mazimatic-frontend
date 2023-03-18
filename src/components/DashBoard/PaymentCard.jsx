@@ -3,14 +3,9 @@ import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  CoinPayment,
-  createTransaction,
-  ePay,
-  PayBaba,
-} from "../../utils/payment";
+import { CoinPayment, createTransaction, ePay } from "../../utils/payment";
 
-const PaymentCard = ({ handleChange, values }) => {
+const PaymentCard = ({ handleChange, values, backStep }) => {
   const [transactionId, setTransactionId] = useState(null);
   const [transactionStatus, setTransactionStatus] = useState("pending");
   const { amount, blockChain, paymentType } = values;
@@ -62,7 +57,6 @@ const PaymentCard = ({ handleChange, values }) => {
         },
       });
     } else if (paymentType == "pay-baba") {
-      PayBaba({ order_id, amount, user });
       createTransaction({
         order_id,
         transaction_id: transactionId,
@@ -250,6 +244,7 @@ const PaymentCard = ({ handleChange, values }) => {
                 <strong>Select Gateway to Pay Amount</strong>
               </div>
               <div className="row pt-2">
+                <div className="col-lg-2 pt-4 text-center"></div>
                 <div className="col-lg-4 pt-4 text-center">
                   <span className="bmd-form-group">
                     <input
@@ -278,28 +273,15 @@ const PaymentCard = ({ handleChange, values }) => {
                     />
                   </span>
                 </div>
-                <div className="col-lg-4 pt-4 text-center">
-                  <span className="bmd-form-group">
-                    <input
-                      alt="baba"
-                      type="image"
-                      value={"pay-baba"}
-                      name="ctl00$ContentPlaceHolder1$upi_btn"
-                      id="ContentPlaceHolder1_upi_btn"
-                      src="images/upi.svg"
-                      onClick={() => BuyNow("pay-baba")}
-                      style={{ width: 78 }}
-                    />
-                  </span>
-                </div>
+                <div className="col-lg-2 pt-4 text-center"></div>
                 <div className="col-lg-12 pt-4 text-center"></div>
               </div>
               <div className="text-center pt-3">
                 <input
                   type="submit"
-                  onClick={() => BuyNow(values.paymentType)}
+                  onClick={() => backStep()}
                   name="ctl00$ContentPlaceHolder1$backbtn"
-                  defaultValue="Back"
+                  value="Back"
                   id="ContentPlaceHolder1_backbtn"
                   className="proceed_btn"
                 />

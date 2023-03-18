@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getPrice } from "../../utils";
 
 const PasswordCard = ({ nextStep, handleChange, values }) => {
   const [loading, setLoading] = useState(false);
@@ -43,13 +44,55 @@ const PasswordCard = ({ nextStep, handleChange, values }) => {
       });
     }
   };
+
+  const handleForgetPassword = async (e) => {
+    setLoading(true);
+    const API_BASE_URL = "https://apis.mazimatic.com";
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/checkemail`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values.email,
+          forgot: true,
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        toast.error(`Error : ${res}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+      if (json.user) {
+        setLoading(false);
+      }
+      if (json.email) {
+        setLoading(false);
+        toast.success(`Password sent to ${values.email}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+      return;
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+
+  // const forgotPassword = async () => {
+
+  // }
   return (
     <div id="enter_password_form" className="cards">
       <div className="card-title pt-3">
         <h3>Pre-Sale Price</h3>
         <h1 className="price-rate">
-          {" "}
-          $ <span id="enter_password_form_token_rate_lbl">0.0035</span>
+          $
+          <span id="enter_password_form_token_rate_lbl">
+            {getPrice(localStorage.getItem("whitelist"))}
+          </span>
         </h1>
       </div>
       <div className="card-middle-title">
@@ -70,7 +113,7 @@ const PasswordCard = ({ nextStep, handleChange, values }) => {
         </div>
         <div className="forget" style={{ textAlign: "right" }}>
           <input
-            type="submit"
+            type="button"
             name="forget_password_btn"
             value={"Forget Password"}
             id="forget_password_btn"
@@ -80,6 +123,7 @@ const PasswordCard = ({ nextStep, handleChange, values }) => {
               fontSize: 18,
               textDecoration: "none",
             }}
+            onClick={handleForgetPassword}
           />
         </div>
         <div className="submit-button pb-5">

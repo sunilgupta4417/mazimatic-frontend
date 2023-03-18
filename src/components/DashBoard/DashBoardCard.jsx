@@ -23,8 +23,13 @@ export default class DashBoardCard extends Component {
   nextStep = async () => {
     const regex = /^[0-9]*$/; // pattern to match inline numbers
     if (!regex.test(this.state.amount)) {
-      console.log(this.state.amount);
       toast.error(`Please enter valid number of amount`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      return;
+    }
+    if (parseInt(this.state.amount) < 200) {
+      toast.error(`Please enter amount >= 200`, {
         position: toast.POSITION.TOP_RIGHT,
       });
       return;
@@ -34,15 +39,17 @@ export default class DashBoardCard extends Component {
     await this.setState({
       token: totalToken,
     });
-    console.log(this.state.token);
     // }
     const { step } = this.state;
     this.setState({ step: step + 1 });
   };
 
+  backStep = () => {
+    this.setState({ step: this.state.step - 1 });
+  };
+
   // Handle fields change
   handleChange = (input) => (e) => {
-    console.log("LL: DashBoardCard -> handleChange -> input", input);
     this.setState({ [input]: e.target.value });
   };
 
@@ -82,9 +89,9 @@ export default class DashBoardCard extends Component {
             <div className="col-lg-12">
               {/*--- Step-2 ---*/}
               <PaymentCard
-                nextStep={this.nextStep}
                 handleChange={this.handleChange}
                 values={values}
+                backStep={this.backStep}
               />
               {/*--- Step-2 End ---*/}
             </div>

@@ -1,8 +1,7 @@
 // Packeage
-import { React, useState, useEffect } from "react";
+import { React, useEffect } from "react";
 import {
   BrowserRouter as Router,
-  json,
   redirect,
   Route,
   Routes,
@@ -36,6 +35,7 @@ function App() {
             .then((json) => {
               // console.log(json.user.id);
               if (json.user) {
+                localStorage.setItem("whitelist", json.user.whitelist);
                 localStorage.setItem("user", json.user.id);
                 redirect("/");
               } else {
