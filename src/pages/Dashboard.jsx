@@ -75,7 +75,7 @@ export default function Dashboard() {
                     </div>
                     <div className="card-footer">
                       <div className="stats">
-                        <a href="transactions.aspx" className="text-white">
+                        <a href="/transactions" className="text-white">
                           All Transactions
                         </a>
                       </div>
@@ -95,7 +95,7 @@ export default function Dashboard() {
                     </div>
                     <div className="card-footer">
                       <div className="stats">
-                        <a href="transactions.aspx" className="text-white">
+                        <a href="/transactions" className="text-white">
                           All Transactions
                         </a>
                       </div>
@@ -117,7 +117,7 @@ export default function Dashboard() {
                     </div>
                     <div className="card-footer">
                       <div className="stats">
-                        <a href="transactions.aspx" className="text-white">
+                        <a href="/transactions" className="text-white">
                           All Transactions
                         </a>
                       </div>
