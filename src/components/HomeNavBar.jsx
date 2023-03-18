@@ -1,6 +1,5 @@
 import { React, Component } from "react";
 import { Link } from "react-router-dom";
-import { UserConsumer, UserContext } from "../UserContext";
 
 export default class HomeNavBar extends Component {
   render() {
@@ -15,6 +14,7 @@ export default class HomeNavBar extends Component {
           <img
             src="/assets/logo/mazimatic_logo_db.png"
             style={{ width: 175 }}
+            alt="mazimatic"
           />
         </Link>
         <button
