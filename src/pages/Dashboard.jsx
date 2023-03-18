@@ -29,7 +29,7 @@ export default function Dashboard() {
         <div className="main-panel">
           {/* Navbar */}
           <nav
-            className="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top "
+            className="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top"
             id="navigation-example"
           >
             <div className="container-fluid">
