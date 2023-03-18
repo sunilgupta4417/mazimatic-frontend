@@ -992,3 +992,15 @@ pt_10{
     margin-top: 50px;
 }
 
+/* New CSS for Loader */
+.top-wrapper {
+    position: relative;
+    width: 100%;
+    display:none;
+  }
+  .loader-logo {
+    position: absolute;
+    margin-left: 25px;
+    margin-top: 25px;
+    z-index: 9999999;
+}
