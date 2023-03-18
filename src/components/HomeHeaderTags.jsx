@@ -24,7 +24,7 @@ export default class HomeHeaderTags extends Component {
         />
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/4.0.0/jquery.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
+        {/* <script src="assets/js/bootstrap.min.js"></script> */}
         <link rel="stylesheet" type="text/css" href="assets/css/main.css" />
         <link
           rel="stylesheet"
