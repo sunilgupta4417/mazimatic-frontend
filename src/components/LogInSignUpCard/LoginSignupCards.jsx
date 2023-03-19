@@ -31,7 +31,9 @@ export default class LoginSignupCards extends Component {
   render() {
     const { step } = this.state;
     const { email, password } = this.state;
-    const values = { email, password };
+    /*const {loginattempt}={"loginattempt":"first"};
+    const values = { email, password,loginattempt };*/
+    const values ={ email, password}
 
     switch (step) {
       case 1:

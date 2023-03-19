@@ -6,7 +6,6 @@ import LoadingScreen from "../components/LoadingScreen";
 import UserDashboardHeaderTags from "../components/UserDashboarcHeaderTags";
 import UserDashboardFooterTags from "../components/UserDashboardFooter";
 import DashBoardCard from "../components/DashBoard/DashBoardCard";
-import { getPrice } from "../utils";
 export default function Dashboard() {
   const [isLoaded, setIsLoaded] = useState(true);
   useEffect(() => {
@@ -118,7 +117,7 @@ export default function Dashboard() {
                       <p className="card-category text-white">Tokens Value</p>
                       <h3 className="card-title text-white">
                         <span id="ContentPlaceHolder1_tokens_value_lbl">
-                          $ {getPrice(localStorage.getItem("whitelist"))}
+                          $ {(transaction_stock*(transaction_amount/transactionStock))}
                         </span>
                       </h3>
                     </div>

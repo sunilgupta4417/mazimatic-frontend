@@ -17,14 +17,21 @@ const EmailCard = ({ nextStep, handleChange, values }) => {
     }
     const API_BASE_URL = "https://apis.mazimatic.com";
     try {
+      const checkUserToken=localStorage.getItem("token");
+      var requestedData={};
+      requestedData.email=values.email;
+      if(!checkUserToken){
+        requestedData.loginattempt= 1;
+      }else{
+        requestedData.loginattempt= 0;
+      }
+      console.log(requestedData);
       const res = await fetch(`${API_BASE_URL}/api/checkemail`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email: values.email,
-        }),
+        body: JSON.stringify(requestedData),
       });
       const json = await res.json();
       console.log(json);
