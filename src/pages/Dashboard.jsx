@@ -6,6 +6,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import UserDashboardHeaderTags from "../components/UserDashboarcHeaderTags";
 import UserDashboardFooterTags from "../components/UserDashboardFooter";
 import DashBoardCard from "../components/DashBoard/DashBoardCard";
+import { getPrice } from "../utils";
 export default function Dashboard() {
   const [isLoaded, setIsLoaded] = useState(true);
   useEffect(() => {
@@ -19,6 +20,12 @@ export default function Dashboard() {
       setIsLoaded(false);
     }, 2000);
   }, []);
+  
+  const transactionAmount = localStorage.getItem("transaction_amount");
+  const transaction_amount=transactionAmount?transactionAmount:0;
+  const transactionStock = localStorage.getItem("transaction_stock");
+  const transaction_stock=transactionStock?transactionStock:0;
+
   if (isLoaded) {
     return <LoadingScreen />;
   } else {
@@ -70,7 +77,7 @@ export default function Dashboard() {
                         Total Txn. (in $)
                       </p>
                       <h3 className="card-title text-white">
-                        <span id="ContentPlaceHolder1_total_txn_lbl">$ 0</span>
+                        <span id="ContentPlaceHolder1_total_txn_lbl">$ {transaction_amount}</span>
                       </h3>
                     </div>
                     <div className="card-footer">
@@ -90,7 +97,7 @@ export default function Dashboard() {
                       </div>
                       <p className="card-category text-white">Total Tokens</p>
                       <h3 className="card-title text-white">
-                        <span id="ContentPlaceHolder1_total_tokens_lbl">0</span>
+                        <span id="ContentPlaceHolder1_total_tokens_lbl">{transaction_stock}</span>
                       </h3>
                     </div>
                     <div className="card-footer">
@@ -111,7 +118,7 @@ export default function Dashboard() {
                       <p className="card-category text-white">Tokens Value</p>
                       <h3 className="card-title text-white">
                         <span id="ContentPlaceHolder1_tokens_value_lbl">
-                          $ 0.0000
+                          $ {getPrice(localStorage.getItem("whitelist"))}
                         </span>
                       </h3>
                     </div>

@@ -37,6 +37,8 @@ function App() {
               if (json.user) {
                 localStorage.setItem("whitelist", json.user.whitelist);
                 localStorage.setItem("user", json.user.id);
+                localStorage.setItem("transaction_amount", json.user.transaction_amount);
+                localStorage.setItem("transaction_stock", json.user.transaction_stock);
                 redirect("/");
               } else {
                 localStorage.clear();
