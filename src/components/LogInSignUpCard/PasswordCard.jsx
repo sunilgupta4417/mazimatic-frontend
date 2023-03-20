@@ -87,7 +87,7 @@ const PasswordCard = ({ nextStep, handleChange, values }) => {
   return (
     <div id="enter_password_form" className="cards">
       <div className="card-title pt-3">
-        <h3>Pre-Sale Price</h3>
+        <h3>Pre-Sale 2 Price</h3>
         <h1 className="price-rate">
           $
           <span id="enter_password_form_token_rate_lbl">

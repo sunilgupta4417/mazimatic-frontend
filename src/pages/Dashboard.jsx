@@ -21,9 +21,10 @@ export default function Dashboard() {
   }, []);
   
   const transactionAmount = localStorage.getItem("transaction_amount");
-  const transaction_amount=transactionAmount?transactionAmount:0;
+  const transaction_amount=(transactionAmount!=='null')?transactionAmount:0;
   const transactionStock = localStorage.getItem("transaction_stock");
-  const transaction_stock=transactionStock?transactionStock:0;
+  const transaction_stock=(transactionStock!=='null')?transactionStock:0;
+  const transactionTokens=(transaction_amount!==0 && transaction_stock!==0)?(transaction_stock*(transaction_amount/transactionStock)):0;
 
   if (isLoaded) {
     return <LoadingScreen />;
@@ -117,7 +118,7 @@ export default function Dashboard() {
                       <p className="card-category text-white">Tokens Value</p>
                       <h3 className="card-title text-white">
                         <span id="ContentPlaceHolder1_tokens_value_lbl">
-                          $ {(transaction_stock*(transaction_amount/transactionStock))}
+                          $ {transactionTokens}
                         </span>
                       </h3>
                     </div>
