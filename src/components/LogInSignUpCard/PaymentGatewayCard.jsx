@@ -110,7 +110,7 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
     <>
       <div id="select_gateway_form" className="cards ">
         <div className="card-title pt-3">
-          <h3>Pre-Sale Price</h3>
+          <h3>Pre-Sale 2 Price</h3>
           <h1 className="price-rate">
             $
             <span id="select_gateway_form_token_rate_lbl">
@@ -124,8 +124,8 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
               className="progress-bar"
               role="progressbar"
               aria-label="Info example"
-              style={{ width: "71%" }}
-              aria-valuenow={71}
+              style={{ width: "20%" }}
+              aria-valuenow={20}
               aria-valuemin={0}
               aria-valuemax={100}
             />

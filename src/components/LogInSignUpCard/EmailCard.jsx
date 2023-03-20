@@ -45,11 +45,42 @@ const EmailCard = ({ nextStep, handleChange, values }) => {
         nextStep();
       }
       if (json.email) {
+        const API_BASE_URL = "https://apis.mazimatic.com";
+        try {
+          const resBody = await fetch(`${API_BASE_URL}/api/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: values.email,
+              password: json.temptoken,
+            }),
+          });
+          const jsonObj = await resBody.json();
+          if (!resBody.ok) {
+            setLoading(false);
+            toast.error(`Error : ${jsonObj.message}`, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+            return;
+          }
+          setLoading(false);
+
+          const dataObj = jsonObj;
+          localStorage.setItem("token", dataObj.token);
+          window.location.reload(false);
+        }catch (error) {
+          setLoading(false);
+          toast.error(`Error : ${error}`, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
         setLoading(false);
         toast.success(`Password sent to ${values.email}`, {
           position: toast.POSITION.TOP_RIGHT,
         });
-        nextStep();
+        /*nextStep();*/
       }
       return;
     } catch (error) {
@@ -59,7 +90,7 @@ const EmailCard = ({ nextStep, handleChange, values }) => {
   return (
     <div id="signin_pnl" className="cards">
       <div className="card-title pt-3">
-        <h3>Pre-Sale Price</h3>
+        <h3>Pre-Sale 2 Price</h3>
         <h1 className="price-rate">
           ${" "}
           <span id="signin_pnl_token_rate_lbl">
@@ -73,8 +104,8 @@ const EmailCard = ({ nextStep, handleChange, values }) => {
             className="progress-bar"
             role="progressbar"
             aria-label="Info example"
-            style={{ width: "71%" }}
-            aria-valuenow={71}
+            style={{ width: "20%" }}
+            aria-valuenow={20}
             aria-valuemin={0}
             aria-valuemax={100}
           />
