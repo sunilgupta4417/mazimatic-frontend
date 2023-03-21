@@ -85,9 +85,9 @@ const DashBoardForm = ({
                   type="submit"
                   onClick={nextStep}
                   name="ctl00$ContentPlaceHolder1$proceedbtn"
-                  defaultValue="Proceed"
+                  value="Buy"
                   id="ContentPlaceHolder1_proceedbtn"
-                  className="proceed_btn"
+                  className="proceed_btn px-4 py-1"
                 />
               </div>
             </div>

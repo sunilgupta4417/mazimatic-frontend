@@ -110,7 +110,9 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
     <>
       <div id="select_gateway_form" className="cards ">
         <div className="card-title pt-3">
-          <h3>Pre-Sale 2 Price</h3>
+          <h3>
+            Pre-Sale <span style={{ color: "#5def93" }}>2</span> Price
+          </h3>
           <h1 className="price-rate">
             $
             <span id="select_gateway_form_token_rate_lbl">
@@ -171,18 +173,32 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
           <p className="payment-title">Select your Blockchain</p>
         </div>
         <div className="checkbox text-center">
-          <button className="btns check" type="button">
-            <img src="tool_imgs/Binance.png" alt="" /> BNB{" "}
+          <label
+            className="btns check"
+            type="button"
+            for="radioBtn"
+            style={{ paddingTop: "5px" }}
+          >
+            {/* <label for="radioBtn"> */}
+            <img src="tool_imgs/Binance.png" alt="" /> BNB {/* </label> */}
             <input
               value={"BNB"}
               name="radioCrypto"
               type="radio"
               onChange={onChangeBlockChain}
               defaultChecked="checked"
+              id="radioBtn"
             />
-          </button>
-          <button className="btns check-btn" type="button" id="button-addon2">
-            <img src="tool_imgs/eth.png" alt="" /> Ethereum{" "}
+          </label>
+          <label
+            className="btns check-btn"
+            type="button"
+            id="button-addon2"
+            For="radioEth"
+            style={{ paddingTop: "5px" }}
+          >
+            {/* <label For="radioEth"> */}
+            <img src="tool_imgs/eth.png" alt="" /> Ethereum {/* </label> */}
             <input
               value={"ETH"}
               name="radioCrypto"
@@ -190,7 +206,7 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
               id="radioEth"
               onChange={onChangeBlockChain}
             />
-          </button>
+          </label>
         </div>
         <div className="payment-method">
           <p className="payment-titles">Select your Payment Method</p>

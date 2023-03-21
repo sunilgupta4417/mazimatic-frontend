@@ -14,8 +14,8 @@ export default class UserDashboardHeaderTags extends Component {
           rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
         />
-        <link href="css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
-        <link href="demo/demo.css" rel="stylesheet" />
+        <link href="/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+        <link href="/demo/demo.css" rel="stylesheet" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link

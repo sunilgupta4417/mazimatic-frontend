@@ -90,7 +90,9 @@ const EmailCard = ({ nextStep, handleChange, values }) => {
   return (
     <div id="signin_pnl" className="cards">
       <div className="card-title pt-3">
-        <h3>Pre-Sale 2 Price</h3>
+        <h3>
+          Pre-Sale <span style={{ color: "#5def93" }}>2</span> Price
+        </h3>
         <h1 className="price-rate">
           ${" "}
           <span id="signin_pnl_token_rate_lbl">

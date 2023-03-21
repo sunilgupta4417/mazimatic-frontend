@@ -16,7 +16,7 @@ import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFaild from "./pages/PaymentFaild";
-import MyComponent from "./pages/MyComponent";
+import ViewTransactions from "./pages/ViewTransactions";
 import "slick-carousel/slick/slick.css";
 function App() {
   // const [loading, setLoading] = useState(true);
@@ -37,8 +37,14 @@ function App() {
               if (json.user) {
                 localStorage.setItem("whitelist", json.user.whitelist);
                 localStorage.setItem("user", json.user.id);
-                localStorage.setItem("transaction_amount", json.user.transaction_amount);
-                localStorage.setItem("transaction_stock", json.user.transaction_stock);
+                localStorage.setItem(
+                  "transaction_amount",
+                  json.user.transaction_amount
+                );
+                localStorage.setItem(
+                  "transaction_stock",
+                  json.user.transaction_stock
+                );
                 redirect("/");
               } else {
                 localStorage.clear();
@@ -69,7 +75,10 @@ function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/payment-fail" element={<PaymentFaild />} />
-            <Route path="/test" element={<MyComponent />} />
+            <Route
+              path="/view-transactions/:id"
+              element={<ViewTransactions />}
+            />
           </Routes>
         </Router>
       </div>
