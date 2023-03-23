@@ -4,7 +4,6 @@ import PasswordCard from "./PasswordCard";
 import PaymentGatewayCard from "./PaymentGatewayCard";
 
 export default class LoginSignupCards extends Component {
-  
   state = {
     step: null,
     email: "",
@@ -33,7 +32,7 @@ export default class LoginSignupCards extends Component {
     const { email, password } = this.state;
     /*const {loginattempt}={"loginattempt":"first"};
     const values = { email, password,loginattempt };*/
-    const values ={ email, password}
+    const values = { email, password };
 
     switch (step) {
       case 1:

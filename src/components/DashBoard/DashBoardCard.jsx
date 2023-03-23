@@ -10,7 +10,7 @@ export default class DashBoardCard extends Component {
     step: null,
     amount: "",
     token: "",
-    blockChain: "",
+    blockChain: "BNB",
     paymentType: "",
   };
   constructor(props) {

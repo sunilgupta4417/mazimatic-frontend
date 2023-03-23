@@ -46,7 +46,7 @@ const PaymentCard = ({ handleChange, values, backStep }) => {
         transaction_status: "Pending",
       });
       setTransactionId(txn_id);
-      // window.location.href = checkout_url;
+      window.location.href = checkout_url;
     } else if (paymentType === "e-pay") {
       ePay({
         blockChain,
