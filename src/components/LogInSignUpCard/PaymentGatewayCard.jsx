@@ -19,7 +19,23 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
   const [transactionStatus, setTransactionStatus] = useState("pending");
 
   const user = localStorage.getItem("user");
-  const order_id = uuid();
+  const generateID = () => {
+    const numbers = "1234567890";
+    let characters = numbers;
+    const length = 4;
+    let ORDID = "";
+    for (let i = 0; i < length; i++) {
+      let character = "";
+      do {
+        const index = Math.floor(Math.random() * characters.length);
+        character = characters.charAt(index);
+      } while (ORDID.indexOf(character) !== -1);
+      ORDID += character;
+    }
+    return ORDID;
+  };
+  const order_id =
+    new Date().toISOString().replace(/[-:.TZ]/g, "") + generateID();
   const totalToken = (event) => {
     const regex = /^[0-9]*$/; // pattern to match inline numbers
     if (regex.test(event.target.value)) {
@@ -78,7 +94,7 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
           setTransactionStatus("Success");
           setTransactionId(response.response.transactionid);
           if (transactionStatus == "Success") {
-            await createTransaction({
+            const res = await createTransaction({
               order_id,
               transaction_id: response.response.transactionid,
               chain: blockChain,
@@ -88,11 +104,11 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
               transaction_amt: amount,
               transaction_status: "Success",
             });
+            console.log(res);
+            // navigate("/payment-success");
           }
-          navigate("/payment-success");
         },
         failedHandler: async function (response) {
-          navigate("/payment-fail");
           await createTransaction({
             order_id,
             transaction_id: response.response.transactionid,
@@ -103,6 +119,7 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
             transaction_amt: amount,
             transaction_status: "Failure",
           });
+          navigate("/payment-fail");
         },
       });
     }
