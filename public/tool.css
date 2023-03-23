@@ -586,6 +586,7 @@ p.bottom-para {
 .btns.check {
     width: 160px;
     height: 42.63px;
+    margin-right: 10px;
     background: linear-gradient(114.01deg, #A04FF0 -2.51%, rgba(255, 255, 255, 0.17) 151.05%);
     border: 1px solid rgba(255, 255, 255, 0.5);
     box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.64), 5px 6px 20px rgba(0, 0, 0, 0.15);
