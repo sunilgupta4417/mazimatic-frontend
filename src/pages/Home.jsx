@@ -41,7 +41,7 @@ export default function Home() {
 
   // return (
   if (isLoaded) {
-    return(<LoadingScreen />);
+    return <LoadingScreen />;
   } else {
     return (
       <>
@@ -65,6 +65,8 @@ export default function Home() {
                     <a
                       href="https://mazimatic.com/files/whitepaper.pdf"
                       className="btn btn_link"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       WhitePaper
                     </a>
@@ -72,6 +74,8 @@ export default function Home() {
                     <a
                       href="https://mazimatic.com/files/Mazi_Tokenomics.pdf"
                       className="btn btn_link"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Tokenomics
                     </a>
@@ -79,6 +83,8 @@ export default function Home() {
                     <a
                       href="https://mazimatic.com/files/Roadmap.pdf"
                       className="btn btn_link"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Road Map
                     </a>

@@ -75,7 +75,6 @@ export default class Profile extends Component {
           position: toast.POSITION.TOP_RIGHT,
         });
         return;
-        return;
       } catch (error) {
         console.log(error);
       }

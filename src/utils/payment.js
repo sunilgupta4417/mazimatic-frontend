@@ -3,7 +3,7 @@ export const CoinPayment = async ({ amount }) => {
   // const createTransaction = async () => {
 
   try {
-    const API_BASE_URL = "http://localhost:5001";
+    const API_BASE_URL = "https://apis.mazimatic.com";
 
     const response = await fetch(`${API_BASE_URL}/api/coinpayment-link`, {
       method: "POST",
@@ -18,20 +18,11 @@ export const CoinPayment = async ({ amount }) => {
     });
     const result = await response.json();
     return { txn_id: result.txn_id, checkout_url: result.checkout_url };
-    // setTransactionId(result.txn_id);
-    // window.location.href = result.checkout_url;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const PayBaba = ({ order_id, user, amount }) => {
-  window.open(
-    `https://payments.paybaba.co/pay/63f784d54d84e1b05d5d2ee2/${order_id}/${user}/${amount}`,
-    "_child",
-    "width=375,height=645"
-  );
-};
 export const createTransaction = async ({
   order_id,
   transaction_id,
@@ -44,6 +35,7 @@ export const createTransaction = async ({
 }) => {
   // console.log("createTransaction");
   const data = {
+    customer_id: localStorage.getItem("user"),
     order_id,
     transaction_id,
     transaction_amt,

@@ -3,14 +3,9 @@ import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  CoinPayment,
-  createTransaction,
-  ePay,
-  PayBaba,
-} from "../../utils/payment";
+import { CoinPayment, createTransaction, ePay } from "../../utils/payment";
 
-const PaymentCard = ({ handleChange, values }) => {
+const PaymentCard = ({ handleChange, values, backStep }) => {
   const [transactionId, setTransactionId] = useState(null);
   const [transactionStatus, setTransactionStatus] = useState("pending");
   const { amount, blockChain, paymentType } = values;
@@ -20,7 +15,20 @@ const PaymentCard = ({ handleChange, values }) => {
   const order_id = uuid();
   const BuyNow = async (paymentType) => {
     if (paymentType == "coin-payment") {
+      console.log("LL: BuyNow -> values", values);
+
       const { txn_id, checkout_url } = await CoinPayment({ amount });
+
+      await createTransaction({
+        order_id,
+        transaction_id: txn_id,
+        chain: blockChain,
+        description: paymentType,
+        gateway: paymentType,
+        stock: values.token,
+        transaction_amt: amount,
+        transaction_status: "Pending",
+      });
       setTransactionId(txn_id);
       window.location.href = checkout_url;
     } else if (paymentType === "e-pay") {
@@ -34,7 +42,7 @@ const PaymentCard = ({ handleChange, values }) => {
           setTransactionStatus("Success");
           setTransactionId(response.response.transactionid);
           if (transactionStatus == "Success") {
-            createTransaction({
+            await createTransaction({
               order_id,
               transaction_id: response.response.transactionid,
               chain: blockChain,
@@ -49,7 +57,7 @@ const PaymentCard = ({ handleChange, values }) => {
         },
         failedHandler: async function (response) {
           navigate("/payment-fail");
-          createTransaction({
+          await createTransaction({
             order_id,
             transaction_id: response.response.transactionid,
             chain: blockChain,
@@ -60,18 +68,6 @@ const PaymentCard = ({ handleChange, values }) => {
             transaction_status: "Failure",
           });
         },
-      });
-    } else if (paymentType == "pay-baba") {
-      PayBaba({ order_id, amount, user });
-      createTransaction({
-        order_id,
-        transaction_id: transactionId,
-        chain: blockChain,
-        description: paymentType,
-        gateway: paymentType,
-        stock: values.token,
-        transaction_amt: amount,
-        transaction_status: transactionStatus,
       });
     }
   };
@@ -250,6 +246,7 @@ const PaymentCard = ({ handleChange, values }) => {
                 <strong>Select Gateway to Pay Amount</strong>
               </div>
               <div className="row pt-2">
+                <div className="col-lg-2 pt-4 text-center"></div>
                 <div className="col-lg-4 pt-4 text-center">
                   <span className="bmd-form-group">
                     <input
@@ -278,28 +275,15 @@ const PaymentCard = ({ handleChange, values }) => {
                     />
                   </span>
                 </div>
-                <div className="col-lg-4 pt-4 text-center">
-                  <span className="bmd-form-group">
-                    <input
-                      alt="baba"
-                      type="image"
-                      value={"pay-baba"}
-                      name="ctl00$ContentPlaceHolder1$upi_btn"
-                      id="ContentPlaceHolder1_upi_btn"
-                      src="images/upi.svg"
-                      onClick={() => BuyNow("pay-baba")}
-                      style={{ width: 78 }}
-                    />
-                  </span>
-                </div>
+                <div className="col-lg-2 pt-4 text-center"></div>
                 <div className="col-lg-12 pt-4 text-center"></div>
               </div>
               <div className="text-center pt-3">
                 <input
                   type="submit"
-                  onClick={() => BuyNow(values.paymentType)}
+                  onClick={() => backStep()}
                   name="ctl00$ContentPlaceHolder1$backbtn"
-                  defaultValue="Back"
+                  value="Back"
                   id="ContentPlaceHolder1_backbtn"
                   className="proceed_btn"
                 />

@@ -19,6 +19,13 @@ export default function Dashboard() {
       setIsLoaded(false);
     }, 2000);
   }, []);
+  
+  const transactionAmount = localStorage.getItem("transaction_amount");
+  const transaction_amount=(transactionAmount!=='null')?transactionAmount:0;
+  const transactionStock = localStorage.getItem("transaction_stock");
+  const transaction_stock=(transactionStock!=='null')?transactionStock:0;
+  const transactionTokens=(transaction_amount!==0 && transaction_stock!==0)?(transaction_stock*(transaction_amount/transactionStock)):0;
+
   if (isLoaded) {
     return <LoadingScreen />;
   } else {
@@ -70,12 +77,12 @@ export default function Dashboard() {
                         Total Txn. (in $)
                       </p>
                       <h3 className="card-title text-white">
-                        <span id="ContentPlaceHolder1_total_txn_lbl">$ 0</span>
+                        <span id="ContentPlaceHolder1_total_txn_lbl">$ {transaction_amount}</span>
                       </h3>
                     </div>
                     <div className="card-footer">
                       <div className="stats">
-                        <a href="transactions.aspx" className="text-white">
+                        <a href="/transactions" className="text-white">
                           All Transactions
                         </a>
                       </div>
@@ -90,12 +97,12 @@ export default function Dashboard() {
                       </div>
                       <p className="card-category text-white">Total Tokens</p>
                       <h3 className="card-title text-white">
-                        <span id="ContentPlaceHolder1_total_tokens_lbl">0</span>
+                        <span id="ContentPlaceHolder1_total_tokens_lbl">{transaction_stock}</span>
                       </h3>
                     </div>
                     <div className="card-footer">
                       <div className="stats">
-                        <a href="transactions.aspx" className="text-white">
+                        <a href="/transactions" className="text-white">
                           All Transactions
                         </a>
                       </div>
@@ -111,13 +118,13 @@ export default function Dashboard() {
                       <p className="card-category text-white">Tokens Value</p>
                       <h3 className="card-title text-white">
                         <span id="ContentPlaceHolder1_tokens_value_lbl">
-                          $ 0.0000
+                          $ {transactionTokens}
                         </span>
                       </h3>
                     </div>
                     <div className="card-footer">
                       <div className="stats">
-                        <a href="transactions.aspx" className="text-white">
+                        <a href="/transactions" className="text-white">
                           All Transactions
                         </a>
                       </div>

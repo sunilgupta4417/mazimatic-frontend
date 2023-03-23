@@ -37,7 +37,7 @@ const DashBoardForm = ({
                     id="ContentPlaceHolder1_radioBnb"
                     defaultChecked="checked"
                     value={"BNB"}
-                    onChange={handleChange("blockChain")}
+                    onChange={onChangeBlockChain}
                   />
                   <label className="m-1" htmlFor="ContentPlaceHolder1_radioBnb">
                     BNB
@@ -48,7 +48,7 @@ const DashBoardForm = ({
                     type="radio"
                     id="ContentPlaceHolder1_radioEth"
                     value={"ETH"}
-                    onChange={handleChange("blockChain")}
+                    onChange={onChangeBlockChain}
                   />
                   <label className="m-1" htmlFor="ContentPlaceHolder1_radioEth">
                     ETH
@@ -85,9 +85,9 @@ const DashBoardForm = ({
                   type="submit"
                   onClick={nextStep}
                   name="ctl00$ContentPlaceHolder1$proceedbtn"
-                  defaultValue="Proceed"
+                  value="Buy"
                   id="ContentPlaceHolder1_proceedbtn"
-                  className="proceed_btn"
+                  className="proceed_btn px-4 py-1"
                 />
               </div>
             </div>

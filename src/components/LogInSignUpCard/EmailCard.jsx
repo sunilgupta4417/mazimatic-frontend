@@ -1,6 +1,7 @@
 import { React, Component, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getPrice } from "../../utils";
 
 const EmailCard = ({ nextStep, handleChange, values }) => {
   const [loading, setLoading] = useState(false);
@@ -16,14 +17,21 @@ const EmailCard = ({ nextStep, handleChange, values }) => {
     }
     const API_BASE_URL = "https://apis.mazimatic.com";
     try {
+      const checkUserToken=localStorage.getItem("token");
+      var requestedData={};
+      requestedData.email=values.email;
+      if(!checkUserToken){
+        requestedData.loginattempt= 1;
+      }else{
+        requestedData.loginattempt= 0;
+      }
+      console.log(requestedData);
       const res = await fetch(`${API_BASE_URL}/api/checkemail`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email: values.email,
-        }),
+        body: JSON.stringify(requestedData),
       });
       const json = await res.json();
       console.log(json);
@@ -37,11 +45,42 @@ const EmailCard = ({ nextStep, handleChange, values }) => {
         nextStep();
       }
       if (json.email) {
+        const API_BASE_URL = "https://apis.mazimatic.com";
+        try {
+          const resBody = await fetch(`${API_BASE_URL}/api/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: values.email,
+              password: json.temptoken,
+            }),
+          });
+          const jsonObj = await resBody.json();
+          if (!resBody.ok) {
+            setLoading(false);
+            toast.error(`Error : ${jsonObj.message}`, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+            return;
+          }
+          setLoading(false);
+
+          const dataObj = jsonObj;
+          localStorage.setItem("token", dataObj.token);
+          window.location.reload(false);
+        }catch (error) {
+          setLoading(false);
+          toast.error(`Error : ${error}`, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
         setLoading(false);
         toast.success(`Password sent to ${values.email}`, {
           position: toast.POSITION.TOP_RIGHT,
         });
-        nextStep();
+        /*nextStep();*/
       }
       return;
     } catch (error) {
@@ -51,9 +90,14 @@ const EmailCard = ({ nextStep, handleChange, values }) => {
   return (
     <div id="signin_pnl" className="cards">
       <div className="card-title pt-3">
-        <h3>Pre-Sale Price</h3>
+        <h3>
+          Pre-Sale <span style={{ color: "#5def93" }}>2</span> Price
+        </h3>
         <h1 className="price-rate">
-          $ <span id="signin_pnl_token_rate_lbl">0.0035</span>
+          ${" "}
+          <span id="signin_pnl_token_rate_lbl">
+            {getPrice(localStorage.getItem("whitelist"))}
+          </span>
         </h1>
       </div>
       <div className="progress_pd">
@@ -62,8 +106,8 @@ const EmailCard = ({ nextStep, handleChange, values }) => {
             className="progress-bar"
             role="progressbar"
             aria-label="Info example"
-            style={{ width: "71%" }}
-            aria-valuenow={71}
+            style={{ width: "20%" }}
+            aria-valuenow={20}
             aria-valuemin={0}
             aria-valuemax={100}
           />
@@ -103,10 +147,9 @@ const EmailCard = ({ nextStep, handleChange, values }) => {
         <div className="card-bottom-text">
           <p className="hr-lines">Payment Partners</p>
         </div>
-        <div className="content-cards d-flex justify-content-around">
+        <div className="content-cards d-flex justify-content-center">
           <div className="coin-img" />
           <div className="payme-img" />
-          <div className="upi-img" />
         </div>
       </div>
     </div>

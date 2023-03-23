@@ -1,5 +1,5 @@
 import { React, Component } from "react";
-
+import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import UserDashboardHeaderTags from "../components/UserDashboarcHeaderTags";
 import UserDashboardFooterTags from "../components/UserDashboardFooter";
@@ -138,12 +138,12 @@ export default class Transactions extends Component {
                                   </span>
                                 </td>
                                 <td>
-                                  <a
+                                  <Link
                                     className="btn btn-sm btn-warning"
-                                    href="#"
+                                    to={`/view-transactions/${transaction.id}`}
                                   >
                                     View
-                                  </a>
+                                  </Link>
                                 </td>
                               </tr>
                             ))

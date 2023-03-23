@@ -3,12 +3,8 @@ import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  CoinPayment,
-  createTransaction,
-  ePay,
-  PayBaba,
-} from "../../utils/payment";
+import { CoinPayment, createTransaction, ePay } from "../../utils/payment";
+import { getPrice } from "../../utils";
 
 // import { Helmet } from "react-helmet";
 
@@ -27,7 +23,9 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
   const totalToken = (event) => {
     const regex = /^[0-9]*$/; // pattern to match inline numbers
     if (regex.test(event.target.value)) {
-      const token = event.target.value / 0.005;
+      const token = parseInt(
+        event.target.value / getPrice(localStorage.getItem("whitelist"))
+      );
       setAmount(event.target.value);
       setToken(token);
     } else {
@@ -46,8 +44,27 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
   };
 
   const BuyNow = async (paymentType) => {
+    if (amount < 200) {
+      toast.error(`Please enter amount >= 200`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      return;
+    }
+
     if (paymentType === "coin-payment") {
+      console.log("LL: BuyNow -> values", values);
+
       const { txn_id, checkout_url } = await CoinPayment({ amount });
+      await createTransaction({
+        order_id,
+        transaction_id: txn_id,
+        chain: blockChain,
+        description: paymentType,
+        gateway: paymentType,
+        stock: token,
+        transaction_amt: amount,
+        transaction_status: "Pending",
+      });
       setTransactionId(txn_id);
       window.location.href = checkout_url;
     } else if (paymentType === "e-pay") {
@@ -61,13 +78,13 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
           setTransactionStatus("Success");
           setTransactionId(response.response.transactionid);
           if (transactionStatus == "Success") {
-            createTransaction({
+            await createTransaction({
               order_id,
               transaction_id: response.response.transactionid,
               chain: blockChain,
               description: paymentType,
               gateway: paymentType,
-              stock: values.token,
+              stock: token,
               transaction_amt: amount,
               transaction_status: "Success",
             });
@@ -76,29 +93,17 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
         },
         failedHandler: async function (response) {
           navigate("/payment-fail");
-          createTransaction({
+          await createTransaction({
             order_id,
             transaction_id: response.response.transactionid,
             chain: blockChain,
             description: paymentType,
             gateway: paymentType,
-            stock: values.token,
+            stock: token,
             transaction_amt: amount,
             transaction_status: "Failure",
           });
         },
-      });
-    } else if (paymentType == "pay-baba") {
-      PayBaba({ order_id, amount, user });
-      createTransaction({
-        order_id,
-        transaction_id: transactionId,
-        chain: blockChain,
-        description: paymentType,
-        gateway: paymentType,
-        stock: values.token,
-        transaction_amt: amount,
-        transaction_status: transactionStatus,
       });
     }
   };
@@ -106,9 +111,14 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
     <>
       <div id="select_gateway_form" className="cards ">
         <div className="card-title pt-3">
-          <h3>Pre-Sale Price</h3>
+          <h3>
+            Pre-Sale <span style={{ color: "#5def93" }}>2</span> Price
+          </h3>
           <h1 className="price-rate">
-            $ <span id="select_gateway_form_token_rate_lbl">0.0035</span>
+            $
+            <span id="select_gateway_form_token_rate_lbl">
+              {getPrice(localStorage.getItem("whitelist"))}
+            </span>
           </h1>
         </div>
         <div className="progress_pd">
@@ -117,8 +127,8 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
               className="progress-bar"
               role="progressbar"
               aria-label="Info example"
-              style={{ width: "71%" }}
-              aria-valuenow={71}
+              style={{ width: "20%" }}
+              aria-valuenow={20}
               aria-valuemin={0}
               aria-valuemax={100}
             />
@@ -164,18 +174,32 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
           <p className="payment-title">Select your Blockchain</p>
         </div>
         <div className="checkbox text-center">
-          <button className="btns check" type="button">
-            <img src="tool_imgs/Binance.png" alt="" /> BNB{" "}
+          <label
+            className="btns check"
+            type="button"
+            for="radioBtn"
+            style={{ paddingTop: "5px" }}
+          >
+            {/* <label for="radioBtn"> */}
+            <img src="tool_imgs/Binance.png" alt="" /> BNB {/* </label> */}
             <input
               value={"BNB"}
               name="radioCrypto"
               type="radio"
               onChange={onChangeBlockChain}
               defaultChecked="checked"
+              id="radioBtn"
             />
-          </button>
-          <button className="btns check-btn" type="button" id="button-addon2">
-            <img src="tool_imgs/eth.png" alt="" /> Ethereum{" "}
+          </label>
+          <label
+            className="btns check-btn"
+            type="button"
+            id="button-addon2"
+            For="radioEth"
+            style={{ paddingTop: "5px" }}
+          >
+            {/* <label For="radioEth"> */}
+            <img src="tool_imgs/eth.png" alt="" /> Ethereum {/* </label> */}
             <input
               value={"ETH"}
               name="radioCrypto"
@@ -183,7 +207,7 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
               id="radioEth"
               onChange={onChangeBlockChain}
             />
-          </button>
+          </label>
         </div>
         <div className="payment-method">
           <p className="payment-titles">Select your Payment Method</p>
@@ -225,7 +249,7 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
                 <img src="images/cards_all.png" alt="all" />
               </div>
             </div>
-            <div
+            {/* <div
               id="upi_div"
               className="row payment_mth_1 mb-2 text-center pl_10"
             >
@@ -242,7 +266,7 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
               <div className="col-auto text-start">
                 <img src="images/upi_all.png" alt="UPI all" />
               </div>
-            </div>
+            </div> */}
             <div className="text-center">
               <button
                 onClick={() => BuyNow(paymentType)}
