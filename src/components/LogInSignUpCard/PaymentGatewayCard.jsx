@@ -52,7 +52,19 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
     }
 
     if (paymentType === "coin-payment") {
+      console.log("LL: BuyNow -> values", values);
+
       const { txn_id, checkout_url } = await CoinPayment({ amount });
+      await createTransaction({
+        order_id,
+        transaction_id: txn_id,
+        chain: blockChain,
+        description: paymentType,
+        gateway: paymentType,
+        stock: token,
+        transaction_amt: amount,
+        transaction_status: "Pending",
+      });
       setTransactionId(txn_id);
       window.location.href = checkout_url;
     } else if (paymentType === "e-pay") {
@@ -66,13 +78,13 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
           setTransactionStatus("Success");
           setTransactionId(response.response.transactionid);
           if (transactionStatus == "Success") {
-            createTransaction({
+            await createTransaction({
               order_id,
               transaction_id: response.response.transactionid,
               chain: blockChain,
               description: paymentType,
               gateway: paymentType,
-              stock: values.token,
+              stock: token,
               transaction_amt: amount,
               transaction_status: "Success",
             });
@@ -81,28 +93,17 @@ const PaymentGatewayCard = ({ nextStep, handleChange, values }) => {
         },
         failedHandler: async function (response) {
           navigate("/payment-fail");
-          createTransaction({
+          await createTransaction({
             order_id,
             transaction_id: response.response.transactionid,
             chain: blockChain,
             description: paymentType,
             gateway: paymentType,
-            stock: values.token,
+            stock: token,
             transaction_amt: amount,
             transaction_status: "Failure",
           });
         },
-      });
-    } else if (paymentType == "pay-baba") {
-      createTransaction({
-        order_id,
-        transaction_id: transactionId,
-        chain: blockChain,
-        description: paymentType,
-        gateway: paymentType,
-        stock: values.token,
-        transaction_amt: amount,
-        transaction_status: transactionStatus,
       });
     }
   };

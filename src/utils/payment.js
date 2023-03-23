@@ -18,8 +18,6 @@ export const CoinPayment = async ({ amount }) => {
     });
     const result = await response.json();
     return { txn_id: result.txn_id, checkout_url: result.checkout_url };
-    // setTransactionId(result.txn_id);
-    // window.location.href = result.checkout_url;
   } catch (error) {
     console.log(error);
   }
@@ -37,6 +35,7 @@ export const createTransaction = async ({
 }) => {
   // console.log("createTransaction");
   const data = {
+    customer_id: localStorage.getItem("user"),
     order_id,
     transaction_id,
     transaction_amt,

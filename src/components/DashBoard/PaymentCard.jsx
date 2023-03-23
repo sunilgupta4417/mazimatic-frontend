@@ -15,9 +15,22 @@ const PaymentCard = ({ handleChange, values, backStep }) => {
   const order_id = uuid();
   const BuyNow = async (paymentType) => {
     if (paymentType == "coin-payment") {
+      console.log("LL: BuyNow -> values", values);
+
       const { txn_id, checkout_url } = await CoinPayment({ amount });
+
+      await createTransaction({
+        order_id,
+        transaction_id: txn_id,
+        chain: blockChain,
+        description: paymentType,
+        gateway: paymentType,
+        stock: values.token,
+        transaction_amt: amount,
+        transaction_status: "Pending",
+      });
       setTransactionId(txn_id);
-      window.location.href = checkout_url;
+      // window.location.href = checkout_url;
     } else if (paymentType === "e-pay") {
       ePay({
         blockChain,
@@ -29,7 +42,7 @@ const PaymentCard = ({ handleChange, values, backStep }) => {
           setTransactionStatus("Success");
           setTransactionId(response.response.transactionid);
           if (transactionStatus == "Success") {
-            createTransaction({
+            await createTransaction({
               order_id,
               transaction_id: response.response.transactionid,
               chain: blockChain,
@@ -44,7 +57,7 @@ const PaymentCard = ({ handleChange, values, backStep }) => {
         },
         failedHandler: async function (response) {
           navigate("/payment-fail");
-          createTransaction({
+          await createTransaction({
             order_id,
             transaction_id: response.response.transactionid,
             chain: blockChain,
@@ -55,17 +68,6 @@ const PaymentCard = ({ handleChange, values, backStep }) => {
             transaction_status: "Failure",
           });
         },
-      });
-    } else if (paymentType == "pay-baba") {
-      createTransaction({
-        order_id,
-        transaction_id: transactionId,
-        chain: blockChain,
-        description: paymentType,
-        gateway: paymentType,
-        stock: values.token,
-        transaction_amt: amount,
-        transaction_status: transactionStatus,
       });
     }
   };
