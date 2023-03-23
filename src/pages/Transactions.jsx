@@ -132,7 +132,16 @@ export default class Transactions extends Component {
                                 <td>
                                   <span
                                     id="ContentPlaceHolder1_Repeater1_transaction_status_0"
-                                    style={{ color: "#EED93F" }}
+                                    style={{
+                                      color:
+                                        transaction.transaction_status ==
+                                        "Pending"
+                                          ? "#EED93F"
+                                          : transaction.transaction_status ==
+                                            "Success"
+                                          ? "#5def93"
+                                          : "#ff1e47",
+                                    }}
                                   >
                                     {transaction.transaction_status}
                                   </span>

@@ -12,7 +12,23 @@ const PaymentCard = ({ handleChange, values, backStep }) => {
   const navigate = useNavigate();
   const API_BASE_URL = "https://apis.mazimatic.com";
   const user = localStorage.getItem("user");
-  const order_id = uuid();
+  const generateID = () => {
+    const numbers = "1234567890";
+    let characters = numbers;
+    const length = 4;
+    let ORDID = "";
+    for (let i = 0; i < length; i++) {
+      let character = "";
+      do {
+        const index = Math.floor(Math.random() * characters.length);
+        character = characters.charAt(index);
+      } while (ORDID.indexOf(character) !== -1);
+      ORDID += character;
+    }
+    return ORDID;
+  };
+  const order_id =
+    new Date().toISOString().replace(/[-:.TZ]/g, "") + generateID();
   const BuyNow = async (paymentType) => {
     if (paymentType == "coin-payment") {
       console.log("LL: BuyNow -> values", values);
