@@ -37,7 +37,7 @@ const DashBoardForm = ({
                     id="ContentPlaceHolder1_radioBnb"
                     defaultChecked="checked"
                     value={"BNB"}
-                    onChange={handleChange("blockChain")}
+                    onChange={onChangeBlockChain}
                   />
                   <label className="m-1" htmlFor="ContentPlaceHolder1_radioBnb">
                     BNB
@@ -48,7 +48,7 @@ const DashBoardForm = ({
                     type="radio"
                     id="ContentPlaceHolder1_radioEth"
                     value={"ETH"}
-                    onChange={handleChange("blockChain")}
+                    onChange={onChangeBlockChain}
                   />
                   <label className="m-1" htmlFor="ContentPlaceHolder1_radioEth">
                     ETH
