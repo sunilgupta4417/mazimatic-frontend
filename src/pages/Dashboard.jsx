@@ -1,30 +1,59 @@
 import { React, Component, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
 
 import Sidebar from "../components/Sidebar";
 import LoadingScreen from "../components/LoadingScreen";
 import UserDashboardHeaderTags from "../components/UserDashboarcHeaderTags";
 import UserDashboardFooterTags from "../components/UserDashboardFooter";
 import DashBoardCard from "../components/DashBoard/DashBoardCard";
+import { COIN_PRICE } from "../constants";
 export default function Dashboard() {
   const [isLoaded, setIsLoaded] = useState(true);
+  const [metaData, setMetaData] = useState({
+    totalAmount: 0,
+    totalTokens: 0,
+    totalTokensValue: 0,
+  });
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("token");
-
-    if (!loggedInUser) {
-      <Navigate replace to="/" />;
-    }
-    setIsLoaded(true);
-    setTimeout(() => {
+    (async () => {
+      const API_BASE_URL = "https://apis.mazimatic.com";
+      const res = await fetch(`${API_BASE_URL}/api/get-transaction`, {
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      const transactions = await res.json();
+      const transactionsArray = transactions.message;
+      setMetaData(
+        transactionsArray.reduce(
+          (prev, curr) => {
+            if (curr.transaction_status.toLowerCase() === "success") {
+              prev.totalTokens += parseInt(curr.stock, 10);
+              prev.totalAmount += parseInt(curr.transaction_amt, 10);
+              prev.totalTokensValue += parseInt(curr.stock, 10) * COIN_PRICE;
+            }
+            return prev;
+          },
+          {
+            ...metaData,
+          }
+        )
+      );
       setIsLoaded(false);
-    }, 2000);
+    })();
+
+    // this.setState({ transactions: transactions.message, loading: false });
   }, []);
-  
-  const transactionAmount = localStorage.getItem("transaction_amount");
-  const transaction_amount=(transactionAmount!=='null')?transactionAmount:0;
-  const transactionStock = localStorage.getItem("transaction_stock");
-  const transaction_stock=(transactionStock!=='null')?transactionStock:0;
-  const transactionTokens=(transaction_amount!==0 && transaction_stock!==0)?(transaction_stock*(transaction_amount/transactionStock)):0;
+
+  // const transactionAmount = localStorage.getItem("transaction_amount");
+  // const transaction_amount =
+  //   transactionAmount !== "null" ? transactionAmount : 0;
+  // const transactionStock = localStorage.getItem("transaction_stock");
+  // const transaction_stock = transactionStock !== "null" ? transactionStock : 0;
+  // const transactionTokens =
+  //   transaction_amount !== 0 && transaction_stock !== 0
+  //     ? transaction_stock * (transaction_amount / transactionStock)
+  //     : 0;
 
   if (isLoaded) {
     return <LoadingScreen />;
@@ -77,7 +106,9 @@ export default function Dashboard() {
                         Total Txn. (in $)
                       </p>
                       <h3 className="card-title text-white">
-                        <span id="ContentPlaceHolder1_total_txn_lbl">$ {transaction_amount}</span>
+                        <span id="ContentPlaceHolder1_total_txn_lbl">
+                          $ {metaData.totalAmount}
+                        </span>
                       </h3>
                     </div>
                     <div className="card-footer">
@@ -97,7 +128,9 @@ export default function Dashboard() {
                       </div>
                       <p className="card-category text-white">Total Tokens</p>
                       <h3 className="card-title text-white">
-                        <span id="ContentPlaceHolder1_total_tokens_lbl">{transaction_stock}</span>
+                        <span id="ContentPlaceHolder1_total_tokens_lbl">
+                          {metaData.totalTokens}
+                        </span>
                       </h3>
                     </div>
                     <div className="card-footer">
@@ -118,7 +151,7 @@ export default function Dashboard() {
                       <p className="card-category text-white">Tokens Value</p>
                       <h3 className="card-title text-white">
                         <span id="ContentPlaceHolder1_tokens_value_lbl">
-                          $ {transactionTokens}
+                          $ {metaData.totalTokensValue}
                         </span>
                       </h3>
                     </div>
