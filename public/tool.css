@@ -10,6 +10,25 @@
         background-repeat: no-repeat;
         background-size: inherit;
     }
+
+    .btns.check {
+        width: 148px !important;
+        height: 42.63px;
+        margin-right: 6px;
+        background: linear-gradient(114.01deg, #A04FF0 -2.51%, rgba(255, 255, 255, 0.17) 151.05%);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.64), 5px 6px 20px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(27px);
+        border-radius: 10px;
+        font-family: 'Alumni Sans';
+        font-style: italic;
+        font-weight: 600;
+        font-size: 21px;
+        line-height: 25px;
+        color: #FFFFFF;
+    }
+
+
 }
 body {
     background: #0e151f !important;
